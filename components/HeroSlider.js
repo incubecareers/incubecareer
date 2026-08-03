@@ -35,7 +35,6 @@ export default function HeroSlider({ banners = [] }) {
       onMouseLeave={() => setPaused(false)}
       aria-roledescription="carousel"
     >
-      {/* Fixed banner height for desktop, smaller on mobile. */}
       <div className={`relative overflow-hidden ${bannerSizeClass}`}>
         {banners.map((banner, index) => {
           const isActive = index === activeIndex
@@ -55,7 +54,7 @@ export default function HeroSlider({ banners = [] }) {
                   <img
                     src={banner.imageUrl}
                     alt={banner.title || 'Featured banner'}
-                    className={`absolute inset-0 mx-auto h-full w-full object-contain transition-transform duration-[6000ms] ease-out ${
+                    className={`absolute inset-0 mx-auto h-full w-full object-cover object-center transition-transform duration-[6000ms] ease-out ${
                       isActive ? 'scale-[1.02]' : 'scale-100'
                     }`}
                   />
