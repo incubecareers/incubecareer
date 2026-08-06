@@ -134,5 +134,15 @@ export const authOptions: AuthOptions = {
       }
       return session
     },
+
+    // After Google sign-in, redirect to dashboard instead of back to /login
+    async redirect({ url, baseUrl }: any) {
+      // If url is relative, prefix with baseUrl
+      if (url.startsWith('/')) return `${baseUrl}${url}`
+      // If url starts with baseUrl, allow it
+      if (url.startsWith(baseUrl)) return url
+      // Default: go to dashboard after login
+      return `${baseUrl}/dashboard`
+    },
   },
 }

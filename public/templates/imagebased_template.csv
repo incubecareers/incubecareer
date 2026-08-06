@@ -1,0 +1,3 @@
+questionText,imageUrl,optionA,optionB,optionC,optionD,correctAnswer,explanation,marks
+"Identify the organ shown in the image","https://example.com/heart-diagram.jpg","Heart","Liver","Kidney","Lung","A","The image shows a human heart with four chambers",2
+"What type of circuit is shown?","https://example.com/series-circuit.jpg","Series Circuit","Parallel Circuit","Open Circuit","Short Circuit","A","Components are connected end-to-end in a series circuit",2

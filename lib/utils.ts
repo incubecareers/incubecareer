@@ -19,7 +19,7 @@ export function toEmbedUrl(url = '') {
   if (!url) return ''
   const yt =
     url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([\w-]{11})/)
-  if (yt) return `https://www.youtube.com/embed/${yt[1]}`
+  if (yt) return `https://www.youtube-nocookie.com/embed/${yt[1]}?modestbranding=1&rel=0&showinfo=0&iv_load_policy=3`
   const vimeo = url.match(/vimeo\.com\/(\d+)/)
   if (vimeo) return `https://player.vimeo.com/video/${vimeo[1]}`
   return url

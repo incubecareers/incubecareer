@@ -5,20 +5,18 @@ import { usePathname } from 'next/navigation'
 import {
   LayoutDashboard,
   BookOpen,
-  Library,
   Users,
   ClipboardList,
   GraduationCap,
   Shield,
   Settings2,
+  FileText,
 } from 'lucide-react'
 
 const NAV = [
   { href: '/admin', label: 'Overview', icon: LayoutDashboard, exact: true, permission: 'overview' },
   { href: '/admin/courses', label: 'Courses', icon: BookOpen, permission: 'courses' },
-  // Faculty-only reservoir of tagged questions. Not tied to a course and never
-  // shown to students; the source pool for generated papers/worksheets/tests.
-  { href: '/admin/question-bank', label: 'Question Bank', icon: Library, permission: 'question-bank' },
+  { href: '/admin/exams', label: 'Exam System', icon: FileText, permission: 'exams' },
   { href: '/admin/site-settings', label: 'Site Settings', icon: Settings2, permission: 'overview' },
   { href: '/admin/users', label: 'Users', icon: Users, adminOnly: true, permission: 'users' },
   {

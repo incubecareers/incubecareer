@@ -1,0 +1,3 @@
+questionText,assertion,reason,optionA,optionB,optionC,optionD,correctAnswer,explanation,marks
+"Read the assertion and reason","Plants are green in color","They contain chlorophyll pigment","Both A and R are true and R is the correct explanation of A","Both A and R are true but R is NOT the correct explanation of A","A is true but R is false","A is false but R is true","A","Chlorophyll gives green color to plants",2
+"Read the assertion and reason","All metals are good conductors of heat","Metals have free electrons","Both A and R are true and R is the correct explanation of A","Both A and R are true but R is NOT the correct explanation of A","A is true but R is false","A is false but R is true","A","Free electrons in metals help conduct heat",2

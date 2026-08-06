@@ -1,0 +1,3 @@
+questionText,imageUrl,optionA,optionB,optionC,optionD,correctAnswer,explanation,marks
+"Identify the part marked X in the diagram","https://example.com/plant-cell-diagram.jpg","Cell Wall","Cell Membrane","Nucleus","Chloroplast","C","Part X points to the nucleus of the plant cell",2
+"Label the river shown on the map","https://example.com/india-rivers-map.jpg","Ganga","Yamuna","Brahmaputra","Godavari","A","The highlighted river on the map is the Ganga",2

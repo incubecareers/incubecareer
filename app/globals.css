@@ -2,6 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Hide MSG91 "Secured by" watermark */
+[class*="secured"],
+[class*="msg91-powered"],
+[id*="msg91-powered"],
+[class*="otp-provider"] .powered-by,
+.otp-widget-footer,
+div[style*="verify.msg91.com"] + div,
+iframe[src*="msg91"] + div,
+.phone91-powered,
+#__msg91_widget__ .powered,
+div[class*="poweredBy"],
+div[class*="powered-by"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+}
+
 :root {
   color-scheme: light;
 }

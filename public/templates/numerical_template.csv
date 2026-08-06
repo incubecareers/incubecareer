@@ -1,0 +1,4 @@
+questionText,correctAnswer,explanation,marks
+"What is the value of pi (up to 2 decimal places)?","3.14","Pi is approximately 3.14159",1
+"How many bones are in the human body?","206","Adult human body has 206 bones",1
+"What is the speed of light in km/s?","300000","Speed of light is approximately 3x10^5 km/s",2

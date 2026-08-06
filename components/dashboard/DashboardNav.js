@@ -2,11 +2,12 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { GraduationCap, Compass, User } from 'lucide-react'
+import { GraduationCap, Compass, User, FileText } from 'lucide-react'
 
 const BASE_LINKS = [
   { href: '/dashboard', label: 'My Learning', icon: GraduationCap, exact: true },
   { href: '/courses', label: 'Browse Courses', icon: Compass },
+  { href: '/exams', label: 'Exams', icon: FileText },
   { href: '/dashboard/profile', label: 'Profile', icon: User },
 ]
 

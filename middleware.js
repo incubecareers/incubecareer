@@ -29,11 +29,14 @@ const STUDENT_ROUTES = [
   '/certificates/',
   '/watch-course',
   '/watch-course/',
+  '/exams',
+  '/exams/',
+  '/exams/',
 ]
 
 function isStudentRoute(pathname) {
   return STUDENT_ROUTES.some(
-    (route) => pathname === route || pathname.startsWith(`${route}`)
+    (route) => pathname === route || pathname.startsWith(route)
   )
 }
 

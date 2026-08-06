@@ -12,6 +12,7 @@ import { serialize } from '@/lib/utils'
 import SignInCta from '@/components/SignInCta'
 import EnrollButton from '@/components/EnrollButton'
 import PreviewPlayer from '@/components/PreviewPlayer'
+import LessonPreviewPlayer from '@/components/LessonPreviewPlayer'
 import {
   ArrowLeft,
   Check,
@@ -242,12 +243,17 @@ export default async function CourseDetail({ params }) {
                             </span>
                           )}
                         </span>
-                        {l.duration && (
-                          <span className="flex items-center gap-1 text-xs">
-                            <Clock className="h-3.5 w-3.5" />
-                            {l.duration}
-                          </span>
-                        )}
+                        <span className="flex items-center gap-2">
+                          {l.duration && (
+                            <span className="flex items-center gap-1 text-xs">
+                              <Clock className="h-3.5 w-3.5" />
+                              {l.duration}
+                            </span>
+                          )}
+                          {l.isFreePreview && l.videoUrl && (
+                            <LessonPreviewPlayer videoUrl={l.videoUrl} title={l.title} />
+                          )}
+                        </span>
                       </li>
                     ))}
                     {s.lessons.length === 0 && (
