@@ -63,6 +63,8 @@ export default async function middleware(req) {
 
   if (AUTH_DISABLED) return pass
   if (pathname === '/admin/login') return pass
+  // Never interfere with NextAuth API routes (OAuth callbacks, session, etc.)
+  if (pathname.startsWith('/api/auth')) return pass
 
   if (pathname.startsWith('/admin')) {
     const adminToken = req.cookies.get(ADMIN_TOKEN_NAME)?.value
