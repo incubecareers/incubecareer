@@ -11,6 +11,12 @@ export const dynamic = 'force-dynamic'
 export default async function DashboardLayout({ children }) {
   const userDoc = await getCurrentUser()
   if (!userDoc) redirect('/login')
+  
+  // Enforce profile completion - redirect to complete-profile if not done
+  if (!userDoc.profileCompleted) {
+    redirect('/complete-profile?callbackUrl=/dashboard')
+  }
+  
   const user = serialize(userDoc)
 
   return (

@@ -39,15 +39,15 @@ function getCallbackUrl() {
 }
 
 const HIGHLIGHTS = [
-  { icon: Radio, text: 'Live & recorded classes from expert mentors' },
-  { icon: LineChart, text: 'Daily practice tests & performance tracking' },
-  { icon: GraduationCap, text: 'Personalized mentorship for every goal' },
+  { icon: Radio, text: 'Live & recorded classes from industry experts' },
+  { icon: LineChart, text: 'Real-world projects & hands-on learning' },
+  { icon: GraduationCap, text: 'Career support & job placement assistance' },
 ]
 
 const STATS = [
-  { value: '10k+', label: 'Learners' },
-  { value: '200+', label: 'Lessons' },
-  { value: '95%', label: 'Success mindset' },
+  { value: '5k+', label: 'Career transitions' },
+  { value: '100+', label: 'Live sessions' },
+  { value: '95%', label: 'Job placement rate' },
 ]
 
 export default function LoginPage() {
@@ -173,8 +173,8 @@ export default function LoginPage() {
             Accelerate your career.
           </h2>
           <p className="mt-4 max-w-md text-base text-white/85">
-            Sign in to continue your preparation — boards, NEET, JEE, CET and PUC
-            all in one place.
+            Sign in to continue your learning — live classes with industry experts and
+            career opportunities at top tech companies.
           </p>
 
           <ul className="mt-8 space-y-4">

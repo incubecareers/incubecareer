@@ -18,6 +18,11 @@ export default async function LearnPage({ params }) {
 
   const user = await getCurrentUser()
   if (!user) redirect('/login')
+  
+  // Enforce profile completion before accessing courses
+  if (!user.profileCompleted) {
+    redirect(`/complete-profile?callbackUrl=/learn/${params.id}`)
+  }
 
   await dbConnect()
   const courseDoc = await Course.findById(params.id).lean()

@@ -44,6 +44,21 @@ export async function POST(req) {
   }
 
   try {
+    // For Google users, we're updating their OWN record, so duplicate email is fine
+    // (it's their own email). For phone users, check if email is taken by someone else.
+    if (!isGoogleUser) {
+      const emailTaken = await User.findOne({ 
+        email,
+        _id: { $ne: user._id } // not their own record
+      })
+      if (emailTaken) {
+        return NextResponse.json(
+          { error: 'That email is already registered. Please use a different one or sign in with it.' },
+          { status: 409 }
+        )
+      }
+    }
+
     const updated = await User.findByIdAndUpdate(
       user._id,
       { $set: update },
@@ -52,8 +67,10 @@ export async function POST(req) {
     return NextResponse.json({ ok: true, user: serialize(updated) })
   } catch (err) {
     if (err?.code === 11000) {
+      // Duplicate key error - check which field
+      const field = err.message.includes('phone') ? 'phone number' : 'email'
       return NextResponse.json(
-        { error: 'That email is already registered. Please use a different one or sign in with it.' },
+        { error: `That ${field} is already registered. Please use a different one.` },
         { status: 409 }
       )
     }

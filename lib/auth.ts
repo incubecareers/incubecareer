@@ -112,8 +112,7 @@ export const authOptions: AuthOptions = {
       return true
     },
 
-    // Persist the Mongo _id and role into the JWT (only on sign-in, so we
-    // hit the DB once per login rather than on every request).
+    // Persist the Mongo _id, role, and profileCompleted into the JWT
     async jwt({ token, user, account }: any) {
       if (account && user) {
         await dbConnect()
@@ -121,27 +120,36 @@ export const authOptions: AuthOptions = {
         if (dbUser) {
           token.uid = dbUser._id.toString()
           token.role = dbUser.role
+          token.profileCompleted = dbUser.profileCompleted || false
         }
       }
       return token
     },
 
-    // Expose id + role on the client/server session object.
+    // Expose id, role, and profileCompleted on the session object.
     async session({ session, token }: any) {
       if (session.user) {
         session.user.id = token.uid
         session.user.role = token.role
+        session.user.profileCompleted = token.profileCompleted
       }
       return session
     },
 
-    // After Google sign-in, redirect to dashboard instead of back to /login
-    async redirect({ url, baseUrl }: any) {
+    // After Google sign-in, redirect based on profile completion
+    async redirect({ url, baseUrl, token }: any) {
       // If url is relative, prefix with baseUrl
       if (url.startsWith('/')) return `${baseUrl}${url}`
       // If url starts with baseUrl, allow it
       if (url.startsWith(baseUrl)) return url
-      // Default: go to dashboard after login
+      
+      // Check if profile is complete
+      if (token?.profileCompleted === false) {
+        // Profile not complete - redirect to complete-profile
+        return `${baseUrl}/complete-profile?callbackUrl=/dashboard`
+      }
+      
+      // Profile complete - go to dashboard
       return `${baseUrl}/dashboard`
     },
   },
