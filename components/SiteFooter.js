@@ -72,7 +72,7 @@ export default function SiteFooter({
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
-            <img src="/logo-full.png" alt="Incube Careers" className="h-12 w-auto" />
+            <img src="/logo-full.png" alt="Incube Careers" className="h-10 w-auto" />
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-brand-dark-textSecondary">{about}</p>
             {social.length ? (
               <div className="mt-5 flex flex-wrap items-center gap-2.5">

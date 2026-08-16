@@ -160,7 +160,7 @@ export default function LoginPage() {
 
         <div className="relative">
           <span className="inline-flex items-center gap-2 rounded-xl bg-white px-3 py-2 shadow-sm">
-            <img src="/logo-full.png" alt="Daily Tutors" style={{ width: '200px', height: '50px' }} />
+            <img src="/logo-full.png" alt="Incube Careers" style={{ width: '200px', height: 'auto' }} />
           </span>
         </div>
 
