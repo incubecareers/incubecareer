@@ -32,6 +32,7 @@ export default function CourseForm({ mode = 'create', initialData = null, course
     title: initialData?.title || '',
     description: initialData?.description || '',
     categoryId: initialData?.categoryId || '',
+    categoryIds: initialData?.categoryIds || [],
     category: initialData?.category || '',
     examTarget: initialData?.examTarget || '',
     language: initialData?.language || 'English',
@@ -60,6 +61,23 @@ export default function CourseForm({ mode = 'create', initialData = null, course
   const [savedMsg, setSavedMsg] = useState('')
 
   const update = (k, v) => setForm((f) => ({ ...f, [k]: v }))
+
+  // Toggle category in the categoryIds array
+  function toggleCategory(categoryId) {
+    setForm((f) => {
+      const currentIds = f.categoryIds || []
+      const newIds = currentIds.includes(categoryId)
+        ? currentIds.filter(id => id !== categoryId)
+        : [...currentIds, categoryId]
+      
+      // Also update the primary categoryId to the first selected
+      const primaryId = newIds.length > 0 ? newIds[0] : ''
+      const cat = categories.find((c) => c._id === primaryId)
+      const categoryName = cat?.name || ''
+      
+      return { ...f, categoryIds: newIds, categoryId: primaryId, category: categoryName }
+    })
+  }
 
   // Load the authoritative category list from the DB once.
   useEffect(() => {
@@ -97,14 +115,15 @@ export default function CourseForm({ mode = 'create', initialData = null, course
       setError('Title is required')
       return
     }
-    if (!form.categoryId) {
-      setError('Category is required')
+    if (!form.categoryId && (!form.categoryIds || form.categoryIds.length === 0)) {
+      setError('At least one category is required')
       return
     }
     setSaving(true)
 
     const payload = {
       ...form,
+      categoryIds: form.categoryIds || [],
       originalPrice: Number(form.originalPrice) || 0,
       discountPrice: Number(form.discountPrice) || 0,
       whatYouLearn: learn.map((s) => s.trim()).filter(Boolean),
@@ -162,43 +181,68 @@ export default function CourseForm({ mode = 'create', initialData = null, course
             />
           </Field>
           <div className="grid gap-5 sm:grid-cols-3">
-            <Field label="Category *">
-              <select
-                className={inputCls}
-                value={form.categoryId}
-                onChange={(e) => updateCategory(e.target.value)}
-                required
-              >
-                <option value="">Select category…</option>
-                <optgroup label="School">
-                  {categories
-                    .filter((c) => c.kind === 'school')
-                    .map((c) => (
-                      <option key={c._id} value={c._id}>
-                        {c.name}
-                      </option>
-                    ))}
-                </optgroup>
-                <optgroup label="Competitive Exams">
-                  {categories
-                    .filter((c) => c.kind === 'exam')
-                    .map((c) => (
-                      <option key={c._id} value={c._id}>
-                        {c.name}
-                      </option>
-                    ))}
-                </optgroup>
-              </select>
-              {categories.length === 0 && (
+            <Field label="Categories * (Select all that apply)">
+              <div className="rounded-lg border border-brand-border bg-white p-4 max-h-[300px] overflow-y-auto">
+                {categories.length === 0 ? (
+                  <p className="text-xs text-brand-accent">
+                    No categories found. Run the category seed/migration script.
+                  </p>
+                ) : (
+                  <div className="space-y-3">
+                    {/* Degree categories */}
+                    <div>
+                      <p className="text-xs font-semibold text-brand-textSecondary uppercase tracking-wide mb-2">
+                        Degree Programs
+                      </p>
+                      <div className="space-y-2">
+                        {categories
+                          .filter((c) => c.kind === 'degree')
+                          .map((c) => (
+                            <label key={c._id} className="flex items-center gap-2 cursor-pointer hover:bg-brand-surface p-2 rounded">
+                              <input
+                                type="checkbox"
+                                checked={(form.categoryIds || []).includes(c._id)}
+                                onChange={() => toggleCategory(c._id)}
+                                className="h-4 w-4 rounded border-brand-border text-brand-accent focus:ring-brand-accent"
+                              />
+                              <span className="text-sm text-brand-textPrimary">{c.name}</span>
+                            </label>
+                          ))}
+                      </div>
+                    </div>
+                    
+                    {/* Professional categories */}
+                    {categories.filter((c) => c.kind === 'professional').length > 0 && (
+                      <div className="pt-3 border-t border-brand-border">
+                        <p className="text-xs font-semibold text-brand-textSecondary uppercase tracking-wide mb-2">
+                          Professional Tracks
+                        </p>
+                        <div className="space-y-2">
+                          {categories
+                            .filter((c) => c.kind === 'professional')
+                            .map((c) => (
+                              <label key={c._id} className="flex items-center gap-2 cursor-pointer hover:bg-brand-surface p-2 rounded">
+                                <input
+                                  type="checkbox"
+                                  checked={(form.categoryIds || []).includes(c._id)}
+                                  onChange={() => toggleCategory(c._id)}
+                                  className="h-4 w-4 rounded border-brand-border text-brand-accent focus:ring-brand-accent"
+                                />
+                                <span className="text-sm text-brand-textPrimary">{c.name}</span>
+                              </label>
+                            ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+              <p className="mt-1 text-xs text-brand-textSecondary">
+                Select all categories this course applies to (e.g., BCA, MCA, BSc for a programming course)
+              </p>
+              {(form.categoryIds || []).length > 0 && (
                 <p className="mt-1 text-xs text-brand-accent">
-                  No categories found. Run the category seed/migration script.
-                </p>
-              )}
-              {/* Legacy courses may carry a category name but no linked record
-                  yet — surface it so the admin knows to re-pick one. */}
-              {!form.categoryId && form.category && (
-                <p className="mt-1 text-xs text-brand-textSecondary">
-                  Current (unlinked): {form.category} — please select a category.
+                  ✓ {form.categoryIds.length} categor{form.categoryIds.length === 1 ? 'y' : 'ies'} selected
                 </p>
               )}
             </Field>

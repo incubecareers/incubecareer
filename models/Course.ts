@@ -15,6 +15,13 @@ const CourseSchema = new mongoose.Schema(
       default: null,
       index: true,
     },
+    // Multiple categories support - allows course to belong to multiple streams
+    categoryIds: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: 'Category',
+      default: [],
+      index: true,
+    },
     // Denormalized category name — kept in sync with categoryId on save so
     // listings and ISR pages can render/filter without a populate/join, and so
     // legacy free-text values remain readable during migration.
