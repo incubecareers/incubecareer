@@ -280,7 +280,7 @@ export default function CoursePlayer({
             <Link href="/dashboard" className="shrink-0">
               <Image
                 src="/logo-full.png"
-                alt="Daily Tutors"
+                alt="Incube Careers"
                 width={200}
                 height={44}
                 sizes="(max-width: 640px) 160px, 200px"

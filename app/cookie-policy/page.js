@@ -34,7 +34,7 @@ const sections = [
 
 export const metadata = {
   title: 'Cookie Policy',
-  description: 'Learn how Daily Tutors uses cookies, consent choices, and browser controls.',
+  description: 'Learn how Incube Careers uses cookies, consent choices, and browser controls.',
 }
 
 export default function CookiePolicyPage() {

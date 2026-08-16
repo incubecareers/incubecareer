@@ -83,7 +83,7 @@ export default function EnrollButton({ courseId, enrolled, className = '', price
         amount: orderData.amount,
         currency: orderData.currency,
         order_id: orderData.order_id,
-        name: 'Daily Tutors',
+        name: 'Incube Careers',
         description: `Purchase ${courseTitle || 'this course'}`,
         image: `${window.location.origin}/logo-full.png`,
         handler: async function (response) {

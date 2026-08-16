@@ -1,45 +1,45 @@
-import { Poppins } from 'next/font/google'
+import { League_Spartan } from 'next/font/google'
 import './globals.css'
 import Providers from '@/components/Providers'
 import CookieConsentBanner from '@/components/CookieConsentBanner'
 import ScrollToTop from '@/components/ScrollToTop'
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.dailytutors.in'
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.incubecareers.com'
 
-// Poppins for both body / UI text (400 / 500) and headings (600 / 700)
-const poppins = Poppins({
+// League Spartan for all text (100-900)
+const leagueSpartan = League_Spartan({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-poppins',
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+  variable: '--font-league-spartan',
   display: 'swap',
 })
 
 export const metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'Daily Tutors - Online Coaching for 9th/10th, PUC, NEET, CET & JEE',
-    template: '%s | Daily Tutors',
+    default: 'Incube Careers - Accelerate your career',
+    template: '%s | Incube Careers',
   },
   description:
-    'Daily Tutors provides expert-led online coaching for Class 9/10, PUC, NEET, CET, JEE with live classes, recorded lessons, mock tests and mentorship.',
+    'Live learning with industry experts. Jobs at technology companies. Accelerate your career with Incube Careers.',
   keywords: [
-    'Daily Tutors',
-    'online coaching',
-    'NEET coaching',
-    'JEE coaching',
-    'CET coaching',
-    '9th class coaching',
-    '10th class coaching',
-    'PUC coaching',
-    'board exam preparation',
+    'Incube Careers',
+    'career development',
+    'live learning',
+    'technology careers',
+    'industry experts',
+    'tech jobs',
+    'career acceleration',
+    'professional development',
     'live classes',
+    'tech training',
   ],
-  applicationName: 'Daily Tutors',
-  authors: [{ name: 'Daily Tutors' }],
-  creator: 'Daily Tutors',
-  publisher: 'Daily Tutors',
+  applicationName: 'Incube Careers',
+  authors: [{ name: 'Incube Careers' }],
+  creator: 'Incube Careers',
+  publisher: 'Incube Careers',
   category: 'Education',
-  classification: 'Online learning platform',
+  classification: 'Career development platform',
   alternates: {
     canonical: '/',
     languages: {
@@ -50,24 +50,24 @@ export const metadata = {
     type: 'website',
     locale: 'en_US',
     url: siteUrl,
-    siteName: 'Daily Tutors',
-    title: 'Daily Tutors - Online Coaching for 9th/10th, PUC, NEET, CET & JEE',
+    siteName: 'Incube Careers',
+    title: 'Incube Careers - Accelerate your career',
     description:
-      'Expert-guided online learning for students preparing for boards, NEET, JEE, CET and PUC.',
+      'Live learning with industry experts. Jobs at technology companies.',
     images: [
       {
         url: '/logo-full.png',
         width: 1200,
         height: 630,
-        alt: 'Daily Tutors',
+        alt: 'Incube Careers',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Daily Tutors - Online Coaching for 9th/10th, PUC, NEET, CET & JEE',
+    title: 'Incube Careers - Accelerate your career',
     description:
-      'Expert-guided online learning for students preparing for boards, NEET, JEE, CET and PUC.',
+      'Live learning with industry experts. Jobs at technology companies.',
     images: ['/logo-full.png'],
   },
   robots: {
@@ -88,7 +88,7 @@ export const metadata = {
     apple: '/favicon.svg',
   },
   other: {
-    'theme-color': '#f4f7ff',
+    'theme-color': '#FE5529',
     'mobile-web-app-capable': 'yes',
     'apple-mobile-web-app-capable': 'yes',
     'apple-mobile-web-app-status-bar-style': 'default',
@@ -99,12 +99,12 @@ export const viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
-  themeColor: '#f4f7ff',
+  themeColor: '#FE5529',
 }
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={poppins.variable}>
+    <html lang="en" className={leagueSpartan.variable}>
       <body>
         <Providers>
           {children}

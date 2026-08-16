@@ -28,7 +28,7 @@ export default function BrandPreview() {
     <main className="mx-auto max-w-5xl px-6 py-16">
       <header className="mb-16">
         <h1 className="font-heading text-4xl font-bold text-brand-textPrimary">
-          Daily Tutors
+          Incube Careers
         </h1>
         <p className="mt-2 text-brand-textSecondary">
           Brand foundation — visual checkpoint
@@ -41,7 +41,7 @@ export default function BrandPreview() {
           <div className="flex flex-col items-center gap-4 rounded-xl border border-brand-border bg-brand-primary p-8">
             <img
               src="/logo-full.png"
-              alt="Daily Tutors full logo"
+              alt="Incube Careers full logo"
               className="h-16 w-auto"
             />
             <span className="text-sm text-brand-textSecondary">
@@ -51,7 +51,7 @@ export default function BrandPreview() {
           <div className="flex flex-col items-center gap-4 rounded-xl border border-brand-border bg-brand-primary p-8">
             <img
               src="/logo-icon.png"
-              alt="Daily Tutors icon"
+              alt="Incube Careers icon"
               className="h-16 w-16"
             />
             <span className="text-sm text-brand-textSecondary">

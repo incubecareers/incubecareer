@@ -1,11 +1,11 @@
 {
-  "name": "Daily Tutors",
-  "short_name": "Daily Tutors",
-  "description": "Daily Tutors offers expert-led online coaching for boards, NEET, JEE, CET and PUC.",
+  "name": "Incube Careers",
+  "short_name": "Incube Careers",
+  "description": "Live learning with industry experts. Jobs at technology companies. Accelerate your career with Incube Careers.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#f4f7ff",
+  "theme_color": "#FE5529",
   "icons": [
     {
       "src": "/favicon.svg",

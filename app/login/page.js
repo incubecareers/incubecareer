@@ -25,6 +25,15 @@ const WIDGET_SCRIPTS = [
 
 function getCallbackUrl() {
   if (typeof window === 'undefined') return '/dashboard'
+  
+  // Check sessionStorage for redirect path (set by CareerProgramCard)
+  const storedRedirect = sessionStorage.getItem('redirectAfterLogin')
+  if (storedRedirect) {
+    sessionStorage.removeItem('redirectAfterLogin')
+    return storedRedirect
+  }
+  
+  // Check URL parameter
   const cb = new URLSearchParams(window.location.search).get('callbackUrl')
   return cb && cb.startsWith('/') && !cb.startsWith('//') ? cb : '/dashboard'
 }
@@ -161,7 +170,7 @@ export default function LoginPage() {
             India&apos;s smart learning platform
           </span>
           <h2 className="mt-6 max-w-md font-heading text-4xl font-bold leading-tight">
-            Shape your future with Daily Tutors.
+            Accelerate your career.
           </h2>
           <p className="mt-4 max-w-md text-base text-white/85">
             Sign in to continue your preparation — boards, NEET, JEE, CET and PUC
@@ -196,7 +205,7 @@ export default function LoginPage() {
       <div className="flex items-center justify-center bg-brand-surface px-5 py-10 sm:px-8">
         <div className="w-full max-w-md animate-fade-up">
           <Link href="/" className="mb-8 flex justify-center lg:hidden">
-            <img src="/logo-full.png" alt="Daily Tutors" style={{ width: '200px', height: 'auto' }} />
+            <img src="/logo-full.png" alt="Incube Careers" style={{ width: '200px', height: 'auto' }} />
           </Link>
 
           <div className="rounded-2xl border border-brand-border bg-brand-primary p-7 shadow-card sm:p-9">

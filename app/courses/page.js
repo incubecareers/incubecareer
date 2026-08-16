@@ -53,11 +53,11 @@ export default async function CoursesCatalog() {
   const courseSchema = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    name: 'Daily Tutors Courses',
+    name: 'Incube Careers Courses',
     itemListElement: courses.map((course, index) => ({
       '@type': 'ListItem',
       position: index + 1,
-      url: `https://www.dailytutors.in/courses/${course.slug}`,
+      url: `https://www.incubecareers.com/courses/${course.slug}`,
       name: course.title,
     })),
   }

@@ -9,8 +9,8 @@ const CategorySchema = new mongoose.Schema(
   {
     name: { type: String, required: true, unique: true, trim: true },
     slug: { type: String, required: true, unique: true, index: true, lowercase: true, trim: true },
-    // 'school' (8th–12th) or 'exam' (NEET, KCET) — drives grouping in the UI.
-    kind: { type: String, enum: ['school', 'exam'], default: 'school', index: true },
+    // 'degree' (BCA, MCA, BSc etc.) or 'professional' (career changers, working professionals)
+    kind: { type: String, enum: ['school', 'exam', 'degree', 'professional'], default: 'degree', index: true },
     // Display ordering in dropdowns / tabs.
     order: { type: Number, default: 0 },
     // Soft toggle so a category can be retired without deleting course links.

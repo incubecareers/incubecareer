@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next'
 import dbConnect from '@/lib/mongodb'
 import Course from '@/models/Course'
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.dailytutors.in'
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.incubecareers.com'
 
 // Regenerate at most once an hour so newly published courses appear in the
 // sitemap without needing a redeploy.

@@ -39,7 +39,7 @@ export async function generateMetadata({ params }) {
 
   const description =
     courseDoc.description?.slice(0, 155) ||
-    `Learn ${courseDoc.title} with structured lessons, tests and expert guidance from Daily Tutors.`
+    `Learn ${courseDoc.title} with structured lessons, tests and expert guidance from Incube Careers.`
 
   return {
     title: courseDoc.title,
@@ -51,7 +51,7 @@ export async function generateMetadata({ params }) {
       title: courseDoc.title,
       description,
       type: 'article',
-      url: `https://www.dailytutors.in/courses/${courseDoc.slug}`,
+      url: `https://www.incubecareers.com/courses/${courseDoc.slug}`,
       images: [courseDoc.thumbnail ? courseDoc.thumbnail : '/logo-full.png'],
     },
     twitter: {
@@ -107,12 +107,12 @@ export default async function CourseDetail({ params }) {
     description: course.description || `Learn ${course.title} with structured lessons and expert guidance.`,
     provider: {
       '@type': 'EducationalOrganization',
-      name: 'Daily Tutors',
-      sameAs: 'https://www.dailytutors.in',
+      name: 'Incube Careers',
+      sameAs: 'https://www.incubecareers.com',
     },
     educationalLevel: 'Intermediate',
     teaches: [course.examTarget || 'Exam preparation', course.category || 'Online learning'].filter(Boolean),
-    url: `https://www.dailytutors.in/courses/${course.slug}`,
+    url: `https://www.incubecareers.com/courses/${course.slug}`,
   }
 
   return (
@@ -124,7 +124,7 @@ export default async function CourseDetail({ params }) {
       <header className="sticky top-0 z-20 border-b border-brand-border bg-brand-primary/80 backdrop-blur-md">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3.5 sm:px-6">
           <Link href="/courses">
-            <img src="/logo-full.png" alt="Daily Tutors" style={{ width: '200px', height: 'auto' }} />
+            <img src="/logo-full.png" alt="Incube Careers" style={{ width: '200px', height: 'auto' }} />
           </Link>
           <SignInCta
             label="Sign in"

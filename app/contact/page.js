@@ -5,7 +5,7 @@ import { PageTitle, SectionText, SectionTitle } from '@/components/ui/typography
 
 export const metadata = {
   title: 'Contact Us',
-  description: 'Get in touch with Daily Tutors for course support, bulk plans, or general enquiries.',
+  description: 'Get in touch with Incube Careers for course support, enterprise plans, or general enquiries.',
 }
 
 export default function ContactPage() {
@@ -29,7 +29,7 @@ export default function ContactPage() {
                 <CardDescription>For account, payment, or course access questions.</CardDescription>
               </CardHeader>
               <CardContent>
-                <SectionText>Reach us at <Link href="mailto:support@dailytutors.in" className="font-semibold text-brand-accent">support@dailytutors.in</Link>.</SectionText>
+                <SectionText>Reach us at <Link href="mailto:incubecareers@gmail.com" className="font-semibold text-brand-accent">incubecareers@gmail.com</Link> or call <Link href="tel:+918050108613" className="font-semibold text-brand-accent">+91 80501 08613</Link>.</SectionText>
               </CardContent>
             </Card>
 

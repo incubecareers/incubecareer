@@ -20,26 +20,56 @@ if (!cached) {
 }
 
 export default async function dbConnect(): Promise<typeof mongoose> {
-  if (cached!.conn) return cached!.conn
+  if (cached!.conn) {
+    // Check if connection is alive
+    if (mongoose.connection.readyState === 1) {
+      return cached!.conn
+    }
+    // Connection dropped, clear cache
+    cached!.conn = null
+    cached!.promise = null
+  }
 
   if (!MONGODB_URI) {
     throw new Error('Missing MONGODB_URI environment variable')
   }
 
   if (!cached!.promise) {
+    const opts = {
+      bufferCommands: false,
+      // Keep a warm pool of connections
+      maxPoolSize: 10,
+      minPoolSize: 2,
+      // Longer timeouts for more stable connections
+      serverSelectionTimeoutMS: 15000,
+      socketTimeoutMS: 60000,
+      connectTimeoutMS: 15000,
+      // Retry writes on network errors
+      retryWrites: true,
+      retryReads: true,
+      // Connection heartbeat
+      heartbeatFrequencyMS: 10000,
+    }
+
     cached!.promise = mongoose
-      .connect(MONGODB_URI, {
-        bufferCommands: false,
-        // Keep a warm pool of connections so requests don't pay reconnect cost.
-        maxPoolSize: 10,
-        minPoolSize: 2,
-        // Fail fast instead of hanging when Atlas is briefly unreachable.
-        serverSelectionTimeoutMS: 8000,
-        socketTimeoutMS: 45000,
+      .connect(MONGODB_URI, opts)
+      .then((m) => {
+        console.log('✅ MongoDB connected successfully')
+        return m
       })
-      .then((m) => m)
+      .catch((err) => {
+        cached!.promise = null
+        console.error('❌ MongoDB connection error:', err.message)
+        throw err
+      })
   }
 
-  cached!.conn = await cached!.promise
-  return cached!.conn
+  try {
+    cached!.conn = await cached!.promise
+    return cached!.conn
+  } catch (error) {
+    cached!.promise = null
+    cached!.conn = null
+    throw error
+  }
 }

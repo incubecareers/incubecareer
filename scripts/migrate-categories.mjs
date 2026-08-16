@@ -1,137 +1,118 @@
-// Seed the canonical Category collection and (non-destructively) back-fill
-// every Course's categoryId from its legacy free-text `category` value.
-//
-// Usage:
-//   node scripts/migrate-categories.mjs --dry-run   # preview, writes nothing
-//   node scripts/migrate-categories.mjs             # apply
-//
-// Idempotent: safe to re-run. It only sets categoryId where missing/changed and
-// never deletes data. Mirrors lib/categories.ts (kept in sync by hand because
-// Node cannot import the project's TypeScript directly).
+/**
+ * Seed/update the Category collection with the canonical degree-based categories.
+ * Run with: npm run migrate:categories
+ *
+ * Safe to re-run — uses upsert so it won't duplicate categories.
+ * Deactivates categories not in the new list (old school/exam categories).
+ */
 
-import { readFileSync } from 'node:fs'
-import path from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { readFileSync } from 'fs'
+import { join, dirname } from 'path'
+import { fileURLToPath } from 'url'
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
+
+// Load .env.local manually (handles Windows \r\n line endings)
+try {
+  const envFile = readFileSync(join(__dirname, '..', '.env.local'), 'utf8')
+  // Replace Windows line endings with Unix
+  const lines = envFile.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n')
+  for (const line of lines) {
+    const trimmed = line.trim()
+    if (!trimmed || trimmed.startsWith('#')) continue
+    const eqIdx = trimmed.indexOf('=')
+    if (eqIdx === -1) continue
+    const key = trimmed.slice(0, eqIdx).trim()
+    // Value: everything after = , strip surrounding quotes
+    let val = trimmed.slice(eqIdx + 1)
+    // Remove inline comments (but be careful with URIs that contain #)
+    // Only strip if # is preceded by whitespace
+    val = val.replace(/\s+#.*$/, '').trim()
+    val = val.replace(/^(['"`])(.*)(\1)$/, '$2')
+    if (!process.env[key]) process.env[key] = val
+  }
+} catch (e) {
+  console.log('Warning: Could not read .env.local:', e.message)
+}
+
 import mongoose from 'mongoose'
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const ROOT = path.join(__dirname, '..')
-const DRY_RUN = process.argv.includes('--dry-run')
+const MONGODB_URI = process.env.MONGODB_URI
+if (!MONGODB_URI) {
+  console.error('❌  MONGODB_URI is not set in .env.local')
+  process.exit(1)
+}
 
-// --- Canonical taxonomy (mirror of lib/categories.ts) ---------------------
 const CATEGORIES = [
-  { name: '8th Standard', slug: '8th-standard', kind: 'school', order: 1 },
-  { name: '9th Standard', slug: '9th-standard', kind: 'school', order: 2 },
-  { name: '10th Standard', slug: '10th-standard', kind: 'school', order: 3 },
-  { name: '11th Standard', slug: '11th-standard', kind: 'school', order: 4 },
-  { name: '12th Standard', slug: '12th-standard', kind: 'school', order: 5 },
-  { name: 'NEET', slug: 'neet', kind: 'exam', order: 6 },
-  { name: 'KCET', slug: 'kcet', kind: 'exam', order: 7 },
+  // Undergraduate degrees
+  { name: 'BCA', slug: 'bca', kind: 'degree', order: 1 },
+  { name: 'BBA', slug: 'bba', kind: 'degree', order: 2 },
+  { name: 'BCom', slug: 'bcom', kind: 'degree', order: 3 },
+  { name: 'BSc', slug: 'bsc', kind: 'degree', order: 4 },
+  { name: 'BA', slug: 'ba', kind: 'degree', order: 5 },
+  { name: 'BTech / BE', slug: 'btech-be', kind: 'degree', order: 6 },
+  // Postgraduate degrees
+  { name: 'MCA', slug: 'mca', kind: 'degree', order: 7 },
+  { name: 'MBA', slug: 'mba', kind: 'degree', order: 8 },
+  { name: 'MCom', slug: 'mcom', kind: 'degree', order: 9 },
+  { name: 'MSc', slug: 'msc', kind: 'degree', order: 10 },
+  { name: 'MA', slug: 'ma', kind: 'degree', order: 11 },
+  { name: 'MTech / ME', slug: 'mtech-me', kind: 'degree', order: 12 },
+  // Working professionals / career changers
+  { name: 'Working Professional', slug: 'working-professional', kind: 'professional', order: 13 },
+  { name: 'Career Changer', slug: 'career-changer', kind: 'professional', order: 14 },
+  { name: 'Fresh Graduate', slug: 'fresh-graduate', kind: 'professional', order: 15 },
 ]
 
-const LEGACY_CATEGORY_MAP = {
-  'Class 8': '8th Standard',
-  'Class 9': '9th Standard',
-  'Class 10': '10th Standard',
-  'Class 11': '11th Standard',
-  'Class 12': '12th Standard',
-  '8th Standard': '8th Standard',
-  '9th Standard': '9th Standard',
-  '10th Standard': '10th Standard',
-  '11th Standard': '11th Standard',
-  '12th Standard': '12th Standard',
-  NEET: 'NEET',
-  CET: 'KCET',
-  KCET: 'KCET',
-}
-
-function loadEnv() {
-  if (process.env.MONGODB_URI) return
-  try {
-    const raw = readFileSync(path.join(ROOT, '.env.local'), 'utf8')
-    for (const line of raw.split('\n')) {
-      const m = line.match(/^\s*([\w.-]+)\s*=\s*(.*)\s*$/)
-      if (m && !process.env[m[1]]) {
-        process.env[m[1]] = m[2].replace(/^["']|["']$/g, '')
-      }
-    }
-  } catch {
-    // no .env.local — rely on real env vars
-  }
-}
-
-const CategorySchema = new mongoose.Schema(
-  {
-    name: { type: String, required: true, unique: true, trim: true },
-    slug: { type: String, required: true, unique: true, lowercase: true, trim: true },
-    kind: { type: String, enum: ['school', 'exam'], default: 'school' },
-    order: { type: Number, default: 0 },
-    active: { type: Boolean, default: true },
-  },
-  { timestamps: true }
-)
-// Loose Course schema — we only read `category` and write `categoryId`/`category`.
-const CourseSchema = new mongoose.Schema({}, { strict: false, timestamps: true })
+const CategorySchema = new mongoose.Schema({
+  name: { type: String, required: true, unique: true, trim: true },
+  slug: { type: String, required: true, unique: true, index: true, lowercase: true, trim: true },
+  kind: { type: String, enum: ['school', 'exam', 'degree', 'professional'], default: 'degree', index: true },
+  order: { type: Number, default: 0 },
+  active: { type: Boolean, default: true, index: true },
+}, { timestamps: true })
 
 const Category = mongoose.models.Category || mongoose.model('Category', CategorySchema)
-const Course = mongoose.models.Course || mongoose.model('Course', CourseSchema)
 
-async function main() {
-  loadEnv()
-  const uri = process.env.MONGODB_URI
-  if (!uri) {
-    console.error('Missing MONGODB_URI (set it in .env.local)')
-    process.exit(1)
-  }
+async function migrate() {
+  await mongoose.connect(MONGODB_URI)
+  console.log('✅  Connected to MongoDB')
 
-  console.log(DRY_RUN ? '\n🔍 DRY RUN — no writes will be made.\n' : '\n✍️  Applying migration.\n')
-  await mongoose.connect(uri)
+  const newSlugs = CATEGORIES.map(c => c.slug)
 
-  // 1) Seed / upsert categories.
-  const byName = {}
-  for (const c of CATEGORIES) {
-    let doc = await Category.findOne({ slug: c.slug })
-    if (!doc) {
-      console.log(`  + category "${c.name}"${DRY_RUN ? ' (would create)' : ''}`)
-      if (!DRY_RUN) doc = await Category.create(c)
-      else doc = { _id: `dry:${c.slug}`, ...c }
-    } else {
-      console.log(`  = category "${c.name}" exists`)
-    }
-    byName[c.name] = doc
-  }
+  // Deactivate old categories not in new list
+  const deactivated = await Category.updateMany(
+    { slug: { $nin: newSlugs } },
+    { $set: { active: false } }
+  )
+  console.log(`⚠️   Deactivated ${deactivated.modifiedCount} old categories`)
 
-  // 2) Back-fill courses.
-  const courses = await Course.find({}).lean()
+  // Upsert all new categories
+  let created = 0
   let updated = 0
-  let unmapped = 0
-  for (const course of courses) {
-    if (course.categoryId) continue // already linked; leave it.
-    const legacy = (course.category || '').toString().trim()
-    const canonical = LEGACY_CATEGORY_MAP[legacy]
-    if (!canonical) {
-      unmapped++
-      console.log(`  ! course "${course.title}" has unmapped category "${legacy || '(empty)'}" — assign manually in admin`)
-      continue
+  for (const cat of CATEGORIES) {
+    const result = await Category.findOneAndUpdate(
+      { slug: cat.slug },
+      { $set: { ...cat, active: true } },
+      { upsert: true, new: true }
+    )
+    if (result.createdAt?.getTime() === result.updatedAt?.getTime()) {
+      created++
+    } else {
+      updated++
     }
-    const cat = byName[canonical]
-    console.log(`  → course "${course.title}": "${legacy}" → "${canonical}"${DRY_RUN ? ' (would set)' : ''}`)
-    if (!DRY_RUN) {
-      await Course.updateOne(
-        { _id: course._id },
-        { $set: { categoryId: cat._id, category: canonical } }
-      )
-    }
-    updated++
   }
 
-  console.log(`\nSummary: ${CATEGORIES.length} categories, ${updated} course(s) ${DRY_RUN ? 'to update' : 'updated'}, ${unmapped} needing manual assignment.`)
-  if (DRY_RUN) console.log('Re-run without --dry-run to apply.')
+  console.log(`✅  Created ${created} new categories, updated ${updated} existing categories`)
+  console.log('\n📚  Current categories:')
+  const all = await Category.find({ active: true }).sort({ order: 1 })
+  all.forEach(c => console.log(`   ${c.order}. ${c.name} (${c.kind})`))
 
   await mongoose.disconnect()
+  console.log('\n✅  Migration complete!')
 }
 
-main().catch((err) => {
-  console.error(err)
+migrate().catch(err => {
+  console.error('❌  Migration failed:', err)
   process.exit(1)
 })

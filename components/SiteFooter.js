@@ -2,8 +2,6 @@
 import Link from 'next/link'
 import { SITE_DEFAULTS } from '@/lib/siteDefaults'
 
-// Inline social icons keyed by type — kept local so we don't depend on
-// brand-icon exports that vary between lucide-react versions.
 const svg = {
   width: 18,
   height: 18,
@@ -70,12 +68,12 @@ export default function SiteFooter({
   const social = (Array.isArray(socials) ? socials : []).filter((x) => x?.href)
 
   return (
-    <footer className="border-t border-brand-border bg-brand-surface">
+    <footer className="border-t border-brand-dark-border bg-brand-dark-surface">
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
-            <img src="/logo-full.png" alt="Daily Tutors" className="h-11 w-auto" />
-            <p className="mt-4 max-w-xs text-sm leading-relaxed text-brand-textSecondary">{about}</p>
+            <img src="/logo-full.png" alt="Incube Careers" className="h-12 w-auto" />
+            <p className="mt-4 max-w-xs text-sm leading-relaxed text-brand-dark-textSecondary">{about}</p>
             {social.length ? (
               <div className="mt-5 flex flex-wrap items-center gap-2.5">
                 {social.map((item, i) => (
@@ -85,7 +83,7 @@ export default function SiteFooter({
                     target={item.href.startsWith('http') ? '_blank' : undefined}
                     rel="noopener noreferrer"
                     aria-label={item.type}
-                    className="flex h-10 w-10 items-center justify-center rounded-xl border border-brand-border bg-white text-brand-textSecondary transition hover:-translate-y-0.5 hover:border-brand-accent hover:text-brand-accent hover:shadow-card"
+                    className="flex h-10 w-10 items-center justify-center rounded-xl border border-brand-dark-border bg-brand-dark-card text-brand-dark-textSecondary transition hover:-translate-y-0.5 hover:border-brand-accent hover:text-brand-accent"
                   >
                     {SOCIAL_ICONS[item.type] || SOCIAL_ICONS.mail}
                   </a>
@@ -96,11 +94,11 @@ export default function SiteFooter({
 
           {cols.map((col, i) => (
             <div key={`${col.title}-${i}`}>
-              <h3 className="text-sm font-semibold uppercase tracking-wide text-brand-textPrimary">{col.title}</h3>
+              <h3 className="text-sm font-semibold uppercase tracking-wide text-brand-dark-text">{col.title}</h3>
               <ul className="mt-4 space-y-3">
                 {(col.links || []).map((link, li) => (
                   <li key={`${link.label}-${li}`}>
-                    <Link href={link.href || '/'} className="text-sm text-brand-textSecondary transition hover:text-brand-accent">
+                    <Link href={link.href || '/'} className="text-sm text-brand-dark-textSecondary transition hover:text-brand-accent">
                       {link.label}
                     </Link>
                   </li>
@@ -110,15 +108,15 @@ export default function SiteFooter({
           ))}
         </div>
 
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-brand-border pt-6 sm:flex-row">
-          <p className="text-center text-sm text-brand-textSecondary sm:text-left">{footerText}</p>
-          <div className="flex flex-wrap items-center justify-center gap-4 text-xs font-medium text-brand-textSecondary sm:justify-end">
-            <Link href="/privacy-policy" className="transition hover:text-brand-textPrimary">Privacy Policy</Link>
-            <Link href="/terms-and-conditions" className="transition hover:text-brand-textPrimary">Terms</Link>
-            <Link href="/refund-policy" className="transition hover:text-brand-textPrimary">Refund Policy</Link>
-            <Link href="/cookie-policy" className="transition hover:text-brand-textPrimary">Cookie Policy</Link>
-            <Link href="/about" className="transition hover:text-brand-textPrimary">About</Link>
-            <Link href="/contact" className="transition hover:text-brand-textPrimary">Contact</Link>
+        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-brand-dark-border pt-6 sm:flex-row">
+          <p className="text-center text-sm text-brand-dark-textSecondary sm:text-left">{footerText}</p>
+          <div className="flex flex-wrap items-center justify-center gap-4 text-xs font-medium text-brand-dark-textSecondary sm:justify-end">
+            <Link href="/privacy-policy" className="transition hover:text-brand-dark-text">Privacy Policy</Link>
+            <Link href="/terms-and-conditions" className="transition hover:text-brand-dark-text">Terms</Link>
+            <Link href="/refund-policy" className="transition hover:text-brand-dark-text">Refund Policy</Link>
+            <Link href="/cookie-policy" className="transition hover:text-brand-dark-text">Cookie Policy</Link>
+            <Link href="/about" className="transition hover:text-brand-dark-text">About</Link>
+            <Link href="/contact" className="transition hover:text-brand-dark-text">Contact</Link>
           </div>
         </div>
       </div>

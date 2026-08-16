@@ -5,7 +5,7 @@ import { SectionTitle, SectionText, ListItem } from '@/components/ui/typography'
 const sections = [
   {
     title: 'Introduction',
-    body: 'At Daily Tutors, we respect your privacy and are committed to handling your personal information with care. This Privacy Policy explains what information we collect, how we use it, and the choices you have when using our platform.',
+    body: 'At Incube Careers, we respect your privacy and are committed to handling your personal information with care. This Privacy Policy explains what information we collect, how we use it, and the choices you have when using our platform.',
   },
   {
     title: 'Information We Collect',
@@ -53,13 +53,13 @@ const sections = [
   },
   {
     title: 'Contact Information',
-    body: 'If you have questions about this Privacy Policy or your personal information, please reach out to us at support@dailytutors.in.',
+    body: 'If you have questions about this Privacy Policy or your personal information, please reach out to us at incubecareers@gmail.com.',
   },
 ]
 
 export const metadata = {
   title: 'Privacy Policy',
-  description: 'Read Daily Tutors privacy practices for data collection, payments, security, and your rights.',
+  description: 'Read Incube Careers privacy practices for data collection, payments, security, and your rights.',
 }
 
 export default function PrivacyPolicyPage() {
@@ -93,7 +93,7 @@ export default function PrivacyPolicyPage() {
         <section className="rounded-2xl border border-brand-border bg-brand-surface p-6">
           <SectionTitle>Questions or concerns?</SectionTitle>
           <SectionText className="mt-3">
-            Contact our support team at <Link href="mailto:support@dailytutors.in" className="font-semibold text-brand-accent">support@dailytutors.in</Link>.
+            Contact our support team at <Link href="mailto:incubecareers@gmail.com" className="font-semibold text-brand-accent">incubecareers@gmail.com</Link>.
           </SectionText>
         </section>
       </div>

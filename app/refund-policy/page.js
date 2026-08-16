@@ -4,7 +4,7 @@ import { SectionTitle, SectionText, ListItem } from '@/components/ui/typography'
 const sections = [
   {
     title: 'Digital Products',
-    body: 'All courses and learning materials provided through Daily Tutors are digital products. Refunds are assessed based on access, eligibility, and the nature of the purchase.',
+    body: 'All courses and learning materials provided through Incube Careers are digital products. Refunds are assessed based on access, eligibility, and the nature of the purchase.',
   },
   {
     title: 'Course Purchases',
@@ -36,13 +36,13 @@ const sections = [
   },
   {
     title: 'Contact Support',
-    body: 'Please email support@dailytutors.in with your order details, payment reference, and a description of the issue if you need help with a refund or cancellation request.',
+    body: 'Please email incubecareers@gmail.com with your order details, payment reference, and a description of the issue if you need help with a refund or cancellation request.',
   },
 ]
 
 export const metadata = {
   title: 'Refund and Cancellation Policy',
-  description: 'Understand refund eligibility, timelines, and support for course purchases on Daily Tutors.',
+  description: 'Understand refund eligibility, timelines, and support for course purchases on Incube Careers.',
 }
 
 export default function RefundPolicyPage() {

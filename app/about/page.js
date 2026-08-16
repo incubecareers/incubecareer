@@ -5,7 +5,7 @@ import { PageTitle, SectionText, SectionTitle } from '@/components/ui/typography
 
 export const metadata = {
   title: 'About Us',
-  description: 'Learn more about Daily Tutors and the mission behind our online learning platform.',
+  description: 'Learn more about Incube Careers and our mission to accelerate tech careers.',
 }
 
 export default function AboutPage() {
@@ -16,9 +16,9 @@ export default function AboutPage() {
 
         <div className="mt-6 overflow-hidden rounded-[2rem] border border-brand-border bg-white shadow-card">
           <div className="bg-hero-glow p-8 lg:p-12">
-            <PageTitle>About Daily Tutors</PageTitle>
+            <PageTitle>About Incube Careers</PageTitle>
             <SectionText className="mt-4 max-w-3xl">
-              Daily Tutors is built to make high-quality online coaching accessible, structured, and motivating for students across boards, entrance exams, and school subjects.
+              Incube Careers connects aspiring tech professionals with industry experts through live learning, helping you accelerate your career at technology companies.
             </SectionText>
           </div>
 

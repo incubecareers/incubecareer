@@ -11,7 +11,7 @@ import { Clock, FileText, Calendar, CheckCircle, Trophy } from 'lucide-react'
 import ShareButton from '@/components/exams/ShareButton'
 
 export const metadata = {
-  title: 'Tests - Daily Tutors',
+  title: 'Tests - Incube Careers',
   description: 'Take online tests and track your performance',
 }
 

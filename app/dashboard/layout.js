@@ -21,7 +21,7 @@ export default async function DashboardLayout({ children }) {
             <Link href="/dashboard">
               <img
                 src="/logo-full.png"
-                alt="Daily Tutors"
+                alt="Incube Careers"
                 style={{ width: '200px', height: 'auto' }}
               />
             </Link>

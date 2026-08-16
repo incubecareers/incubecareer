@@ -1,9 +1,9 @@
 // Single source of truth for the course/question-bank category taxonomy.
-// The seven canonical categories the business teaches. The `Category`
-// collection is seeded from this list (scripts/migrate-categories.mjs) and the
-// API validates course category assignments against it.
+// Degree-based categories so students can filter by their educational background.
+// The `Category` collection is seeded from this list (scripts/migrate-categories.mjs)
+// and the API validates course category assignments against it.
 
-export type CategoryKind = 'school' | 'exam'
+export type CategoryKind = 'degree' | 'professional'
 
 export interface CanonicalCategory {
   name: string
@@ -13,34 +13,54 @@ export interface CanonicalCategory {
 }
 
 export const CATEGORIES: CanonicalCategory[] = [
-  { name: '8th Standard', slug: '8th-standard', kind: 'school', order: 1 },
-  { name: '9th Standard', slug: '9th-standard', kind: 'school', order: 2 },
-  { name: '10th Standard', slug: '10th-standard', kind: 'school', order: 3 },
-  { name: '11th Standard', slug: '11th-standard', kind: 'school', order: 4 },
-  { name: '12th Standard', slug: '12th-standard', kind: 'school', order: 5 },
-  { name: 'NEET', slug: 'neet', kind: 'exam', order: 6 },
-  { name: 'KCET', slug: 'kcet', kind: 'exam', order: 7 },
+  // Undergraduate degrees
+  { name: 'BCA', slug: 'bca', kind: 'degree', order: 1 },
+  { name: 'BBA', slug: 'bba', kind: 'degree', order: 2 },
+  { name: 'BCom', slug: 'bcom', kind: 'degree', order: 3 },
+  { name: 'BSc', slug: 'bsc', kind: 'degree', order: 4 },
+  { name: 'BA', slug: 'ba', kind: 'degree', order: 5 },
+  { name: 'BTech / BE', slug: 'btech-be', kind: 'degree', order: 6 },
+  // Postgraduate degrees
+  { name: 'MCA', slug: 'mca', kind: 'degree', order: 7 },
+  { name: 'MBA', slug: 'mba', kind: 'degree', order: 8 },
+  { name: 'MCom', slug: 'mcom', kind: 'degree', order: 9 },
+  { name: 'MSc', slug: 'msc', kind: 'degree', order: 10 },
+  { name: 'MA', slug: 'ma', kind: 'degree', order: 11 },
+  { name: 'MTech / ME', slug: 'mtech-me', kind: 'degree', order: 12 },
+  // Working professionals / career changers
+  { name: 'Working Professional', slug: 'working-professional', kind: 'professional', order: 13 },
+  { name: 'Career Changer', slug: 'career-changer', kind: 'professional', order: 14 },
+  { name: 'Fresh Graduate', slug: 'fresh-graduate', kind: 'professional', order: 15 },
 ]
 
 export const CATEGORY_NAMES = CATEGORIES.map((c) => c.name)
 export const CATEGORY_SLUGS = CATEGORIES.map((c) => c.slug)
 
-// Maps a legacy free-text Course.category value onto a canonical name so the
-// migration script can back-fill categoryId without losing data.
+// Maps legacy category values to canonical names during migration.
 export const LEGACY_CATEGORY_MAP: Record<string, string> = {
-  'Class 8': '8th Standard',
-  'Class 9': '9th Standard',
-  'Class 10': '10th Standard',
-  'Class 11': '11th Standard',
-  'Class 12': '12th Standard',
-  '8th Standard': '8th Standard',
-  '9th Standard': '9th Standard',
-  '10th Standard': '10th Standard',
-  '11th Standard': '11th Standard',
-  '12th Standard': '12th Standard',
-  NEET: 'NEET',
-  CET: 'KCET',
-  KCET: 'KCET',
+  'Class 8': 'Fresh Graduate',
+  'Class 9': 'Fresh Graduate',
+  'Class 10': 'Fresh Graduate',
+  'Class 11': 'Fresh Graduate',
+  'Class 12': 'Fresh Graduate',
+  '8th Standard': 'Fresh Graduate',
+  '9th Standard': 'Fresh Graduate',
+  '10th Standard': 'Fresh Graduate',
+  '11th Standard': 'Fresh Graduate',
+  '12th Standard': 'Fresh Graduate',
+  NEET: 'BSc',
+  CET: 'BTech / BE',
+  KCET: 'BTech / BE',
+  BCA: 'BCA',
+  BBA: 'BBA',
+  BCom: 'BCom',
+  BSc: 'BSc',
+  BA: 'BA',
+  MCA: 'MCA',
+  MBA: 'MBA',
+  MCom: 'MCom',
+  MSc: 'MSc',
+  MA: 'MA',
 }
 
 // Resolve any incoming category string (legacy or canonical) to a canonical

@@ -2,7 +2,7 @@
 
 /* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from 'react'
-import { Plus, Save, Trash2 } from 'lucide-react'
+import { Plus, Save, Trash2, Search } from 'lucide-react'
 import { SITE_DEFAULTS, SOCIAL_TYPES, mergeSiteSettings } from '@/lib/siteDefaults'
 import { ICON_NAMES } from '@/lib/icons'
 import { uploadImageToCloudinary } from '@/lib/cloudinaryUpload'
@@ -87,14 +87,23 @@ export default function SiteSettingsPage() {
   const [uploading, setUploading] = useState(false)
   const [uploadError, setUploadError] = useState('')
   const [error, setError] = useState('')
+  const [allCourses, setAllCourses] = useState([])
+  const [courseSearch, setCourseSearch] = useState('')
 
   useEffect(() => {
     async function load() {
       try {
-        const res = await fetch('/api/admin/site-settings')
-        if (!res.ok) throw new Error('load')
-        const data = await res.json()
+        const [settingsRes, coursesRes] = await Promise.all([
+          fetch('/api/admin/site-settings'),
+          fetch('/api/courses?status=published&limit=100'),
+        ])
+        if (!settingsRes.ok) throw new Error('load')
+        const data = await settingsRes.json()
         setSettings(mergeSiteSettings(data))
+        if (coursesRes.ok) {
+          const coursesData = await coursesRes.json()
+          setAllCourses(Array.isArray(coursesData.courses) ? coursesData.courses : Array.isArray(coursesData) ? coursesData : [])
+        }
       } catch {
         setError('Unable to load settings')
       } finally {
@@ -356,6 +365,81 @@ export default function SiteSettingsPage() {
           <Field label="Badge" value={settings.coursesBadge} onChange={(v) => setKey('coursesBadge', v)} />
           <Field label="Title" value={settings.coursesTitle} onChange={(v) => setKey('coursesTitle', v)} />
           <Field label="Subtitle" value={settings.coursesSubtitle} onChange={(v) => setKey('coursesSubtitle', v)} />
+        </div>
+      </Section>
+
+      {/* FEATURED COURSES on Homepage */}
+      <Section title="Featured Courses on Homepage" desc="Select which courses appear as cards in the 'Which Career Path Is Right for You?' section on the landing page.">
+        <div className="space-y-3">
+          {/* Search box */}
+          <div className="relative">
+            <Search className="absolute left-3 top-2.5 h-4 w-4 text-brand-textSecondary" />
+            <input
+              type="text"
+              placeholder="Search courses by name…"
+              value={courseSearch}
+              onChange={(e) => setCourseSearch(e.target.value)}
+              className="w-full rounded-xl border border-brand-border bg-brand-surface pl-9 pr-4 py-2 text-sm text-brand-textPrimary outline-none focus:border-brand-accent"
+            />
+          </div>
+
+          {/* Currently selected courses */}
+          {(settings.featuredCourseIds || []).length > 0 && (
+            <div className="space-y-2">
+              <p className="text-sm font-semibold text-brand-textPrimary">Selected ({(settings.featuredCourseIds || []).length}/4):</p>
+              {(settings.featuredCourseIds || []).map((id) => {
+                const course = allCourses.find((c) => c._id === id || c._id?.toString() === id)
+                return (
+                  <div key={id} className="flex items-center justify-between gap-3 rounded-xl border border-brand-accent/20 bg-brand-accentLight/30 px-4 py-3">
+                    <div className="flex items-center gap-3 min-w-0">
+                      {course?.thumbnail && (
+                        <img src={course.thumbnail} alt={course?.title} className="h-10 w-16 rounded-lg object-cover shrink-0" />
+                      )}
+                      <div className="min-w-0">
+                        <p className="text-sm font-semibold text-brand-textPrimary truncate">{course?.title || `Course ID: ${id}`}</p>
+                        {course?.category && <p className="text-xs text-brand-textSecondary">{course.category}</p>}
+                      </div>
+                    </div>
+                    <RemoveButton
+                      label="Remove"
+                      onClick={() => setKey('featuredCourseIds', (settings.featuredCourseIds || []).filter((cid) => cid !== id))}
+                    />
+                  </div>
+                )
+              })}
+            </div>
+          )}
+
+          {/* Course picker */}
+          {(settings.featuredCourseIds || []).length < 4 && (
+            <div className="space-y-2">
+              <p className="text-sm font-medium text-brand-textSecondary">
+                {allCourses.length === 0 
+                  ? 'No published courses found. Create and publish courses first.' 
+                  : `Add courses (${4 - (settings.featuredCourseIds || []).length} remaining):`}
+              </p>
+              {allCourses
+                .filter((c) => !(settings.featuredCourseIds || []).includes(c._id?.toString() || c._id))
+                .filter((c) => !courseSearch || c.title?.toLowerCase().includes(courseSearch.toLowerCase()))
+                .map((course) => (
+                  <button
+                    key={course._id}
+                    type="button"
+                    onClick={() => setKey('featuredCourseIds', [...(settings.featuredCourseIds || []), course._id?.toString() || course._id])}
+                    className="flex w-full items-center gap-3 rounded-xl border border-brand-border bg-brand-surface px-4 py-3 text-left transition hover:border-brand-accent hover:bg-brand-accentLight/20"
+                  >
+                    {course.thumbnail && (
+                      <img src={course.thumbnail} alt={course.title} className="h-10 w-16 rounded-lg object-cover shrink-0" />
+                    )}
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm font-semibold text-brand-textPrimary truncate">{course.title}</p>
+                      {course.category && <p className="text-xs text-brand-textSecondary">{course.category}</p>}
+                    </div>
+                    <Plus className="h-4 w-4 shrink-0 text-brand-accent" />
+                  </button>
+                ))}
+            </div>
+          )}
         </div>
       </Section>
 

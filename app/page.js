@@ -1,18 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
 import SignInCta from '@/components/SignInCta'
-import HeroSlider from '@/components/HeroSlider'
 import SiteNavbar from '@/components/SiteNavbar'
 import SiteFooter from '@/components/SiteFooter'
-import { ClipboardCheck, ArrowRight } from 'lucide-react'
-import { getIcon, paletteAt } from '@/lib/icons'
+import CareerProgramCard from '@/components/CareerProgramCard'
+import { ArrowRight, Sparkles, Users, Video, Award, Clock } from 'lucide-react'
 import { SITE_DEFAULTS, mergeSiteSettings } from '@/lib/siteDefaults'
 import dbConnect from '@/lib/mongodb'
 import SiteSetting from '@/models/SiteSetting'
+import Course from '@/models/Course'
 import { serialize } from '@/lib/utils'
+import { getCurrentUser } from '@/lib/session'
 
-// The homepage is served from a static cache for speed/SEO. Admin edits trigger
-// an on-demand refresh (see /api/admin/site-settings), and this is a safety net
-// so changes still appear within a few minutes even if that is missed.
 export const revalidate = 300
 
 async function getSettings() {
@@ -25,177 +23,338 @@ async function getSettings() {
   return mergeSiteSettings(setting ? serialize(setting) : SITE_DEFAULTS)
 }
 
+async function getFeaturedCourses(featuredIds = []) {
+  if (!process.env.MONGODB_URI) {
+    return []
+  }
+
+  try {
+    await dbConnect()
+    
+    // If admin has specified featured course IDs, fetch those specific courses
+    if (featuredIds && featuredIds.length > 0) {
+      const courses = await Course.find({ 
+        _id: { $in: featuredIds },
+        status: 'published' 
+      })
+        .select('title slug description thumbnail category')
+        .lean()
+      
+      // Maintain the order specified by admin
+      const courseMap = {}
+      courses.forEach((c) => { courseMap[c._id.toString()] = c })
+      const ordered = featuredIds.map((id) => courseMap[id]).filter(Boolean)
+      return ordered.map(serialize)
+    }
+    
+    // Fallback: fetch latest 4 published courses
+    const courses = await Course.find({ status: 'published' })
+      .select('title slug description thumbnail category')
+      .sort({ createdAt: -1 })
+      .limit(4)
+      .lean()
+    return courses.map(serialize)
+  } catch (error) {
+    console.error('Error fetching courses:', error)
+    return []
+  }
+}
+
 export default async function Home() {
   const s = await getSettings()
+  const [courses, currentUser] = await Promise.all([
+    getFeaturedCourses(s.featuredCourseIds || []),
+    getCurrentUser(),
+  ])
+  const isAuthenticated = Boolean(currentUser)
 
   const organizationSchema = {
     '@context': 'https://schema.org',
     '@type': 'EducationalOrganization',
-    name: 'Daily Tutors',
-    url: 'https://www.dailytutors.in',
-    logo: 'https://www.dailytutors.in/logo-full.png',
-    description: s.heroBanners?.[0]?.subtitle || SITE_DEFAULTS.heroBanners[0].subtitle,
+    name: 'Incube Careers',
+    url: 'https://www.incubecareers.com',
+    logo: 'https://www.incubecareers.com/logo-full.png',
+    description: 'Live learning with industry experts. Jobs at technology companies.',
     sameAs: (s.socialLinks || []).map((x) => x.href).filter((h) => h && h.startsWith('http')),
   }
 
   return (
-    <div className="min-h-screen bg-brand-primary">
+    <div className="min-h-screen bg-brand-dark-bg">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }} />
 
       <SiteNavbar links={s.navbarLinks} />
 
       <main>
-        {/* Hero */}
-        <HeroSlider
-          banners={(s.heroBanners || [])
-            .slice()
-            .sort((a, b) => (Number(a.position) || 0) - (Number(b.position) || 0))}
-        />
-
-        {/* Stats band */}
-        <section className="relative z-10 mx-auto mt-6 max-w-5xl px-4 sm:-mt-12 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-3 divide-x divide-brand-border rounded-2xl border border-brand-border bg-white/95 shadow-cardHover backdrop-blur sm:rounded-3xl">
-            {s.heroStats.map((stat, i) => (
-              <div key={`${stat.label}-${i}`} className="px-2 py-5 text-center sm:px-3 sm:py-7">
-                <p className="bg-accent-gradient bg-clip-text font-heading text-xl font-bold text-transparent sm:text-4xl">
-                  {stat.value}
-                </p>
-                <p className="mt-1 text-[10px] font-medium leading-tight text-brand-textSecondary sm:text-sm">{stat.label}</p>
+        {/* Hero Section - Dark NextLeap Style */}
+        <section className="relative overflow-hidden bg-brand-dark-bg px-4 py-20 sm:px-6 lg:px-8 lg:py-32">
+          {/* Gradient orbs */}
+          <div className="absolute right-0 top-0 h-[500px] w-[500px] rounded-full bg-brand-accent/20 blur-[120px]" />
+          <div className="absolute bottom-0 left-0 h-[400px] w-[400px] rounded-full bg-purple-500/10 blur-[100px]" />
+          
+          <div className="relative mx-auto max-w-7xl">
+            <div className="mx-auto max-w-4xl text-center">
+              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-brand-dark-border bg-brand-dark-surface/50 px-4 py-2 backdrop-blur-sm">
+                <Sparkles className="h-4 w-4 text-brand-accent" />
+                <span className="text-sm font-semibold text-brand-accent">Bangalore-Based · Live Online Training</span>
               </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Highlights — 3 across on every screen, compact on phones */}
-        <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8 lg:py-16">
-          <div className="grid grid-cols-3 gap-2.5 sm:gap-5">
-            {s.highlights.map((h, i) => {
-              const Icon = getIcon(h.icon)
-              const palette = paletteAt(i)
-              return (
-                <div
-                  key={`${h.title}-${i}`}
-                  className="group flex flex-col items-center gap-1.5 rounded-2xl border border-brand-border bg-white p-3 text-center shadow-card transition-all hover:-translate-y-1 hover:shadow-cardHover sm:gap-3 sm:rounded-3xl sm:p-8"
-                >
-                  <div className={`flex h-9 w-9 items-center justify-center rounded-xl transition-transform group-hover:scale-110 sm:h-14 sm:w-14 sm:rounded-2xl ${palette.accent}`}>
-                    <Icon className="h-[18px] w-[18px] sm:h-7 sm:w-7" />
-                  </div>
-                  <h3 className="font-heading text-sm font-bold leading-tight text-brand-textPrimary sm:text-2xl">{h.title}</h3>
-                  <p className="text-[10px] font-medium leading-tight text-brand-textSecondary sm:text-sm">{h.sub}</p>
-                </div>
-              )
-            })}
-          </div>
-        </section>
-
-        {/* Exam categories */}
-        <section className="mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-8 lg:py-10">
-          <div className="max-w-3xl">
-            {s.examBadge ? (
-              <span className="inline-flex rounded-full bg-brand-accentLight px-3.5 py-1.5 text-xs font-semibold uppercase tracking-[0.28em] text-brand-accentDark">
-                {s.examBadge}
-              </span>
-            ) : null}
-            <h2 className="mt-4 font-heading text-3xl font-bold tracking-tight text-brand-textPrimary sm:text-4xl lg:text-5xl">
-              {s.examHeading}
-            </h2>
-            <p className="mt-3 max-w-2xl text-base text-brand-textSecondary sm:text-lg">{s.examSubheading}</p>
-          </div>
-
-          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {s.examCategories.map((cat, i) => {
-              const Icon = getIcon(cat.icon)
-              const palette = paletteAt(i)
-              return (
+              
+              <h1 className="mb-6 font-heading text-5xl font-black leading-[1.1] tracking-tight text-brand-dark-text sm:text-6xl lg:text-7xl">
+                Accelerate Your Career With{' '}
+                <span className="relative inline-block">
+                  <span className="bg-gradient-to-r from-brand-accent via-orange-400 to-yellow-400 bg-clip-text text-transparent">
+                    Industry-Ready Skills
+                  </span>
+                </span>
+              </h1>
+              
+              <p className="mx-auto mb-10 max-w-2xl text-lg text-brand-dark-textSecondary sm:text-xl">
+                Online career training in HR, Business Analysis, Finance & Accounting — built on live learning, practical skills, and real placement assistance.
+              </p>
+              
+              <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+                <SignInCta
+                  label="Start learning free"
+                  authedLabel="Go to dashboard"
+                  className="group inline-flex items-center justify-center gap-2 rounded-xl bg-brand-accent px-8 py-4 text-lg font-bold text-white shadow-lg shadow-brand-accent/30 transition-all hover:scale-105 hover:shadow-xl hover:shadow-brand-accent/50"
+                />
                 <a
-                  key={`${cat.title}-${i}`}
-                  href={cat.href || '/courses'}
-                  className="group relative overflow-hidden rounded-3xl border border-brand-border bg-white p-6 text-left shadow-card transition-all hover:-translate-y-1 hover:border-brand-accent/30 hover:shadow-cardHover"
+                  href="#features"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-brand-dark-border bg-brand-dark-surface/50 px-8 py-4 text-lg font-bold text-brand-dark-text backdrop-blur-sm transition-all hover:bg-brand-dark-surface"
                 >
-                  <div className={`pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full opacity-70 blur-2xl transition-opacity group-hover:opacity-100 ${palette.glow}`} />
-                  <div className="relative flex items-start justify-between gap-4">
-                    <div>
-                      <p className="text-xl font-semibold text-brand-textPrimary">{cat.title}</p>
-                      <div className="mt-4 flex flex-wrap gap-2">
-                        {(cat.tags || []).map((t, ti) => (
-                          <span key={`${t}-${ti}`} className="rounded-full border border-brand-border bg-brand-surface px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-brand-textSecondary">
-                            {t}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                    <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl shadow-sm transition-transform group-hover:scale-110 ${palette.accent}`}>
+                  Explore courses
+                  <ArrowRight className="h-5 w-5" />
+                </a>
+              </div>
+
+              {/* Social Proof */}
+              <div className="mt-16 flex flex-wrap items-center justify-center gap-8 text-sm text-brand-dark-textSecondary">
+                <div className="flex items-center gap-2">
+                  <div className="flex -space-x-2">
+                    <div className="h-8 w-8 rounded-full border-2 border-brand-dark-bg bg-gradient-to-br from-purple-500 to-pink-600" />
+                    <div className="h-8 w-8 rounded-full border-2 border-brand-dark-bg bg-gradient-to-br from-blue-500 to-cyan-600" />
+                    <div className="h-8 w-8 rounded-full border-2 border-brand-dark-bg bg-gradient-to-br from-green-500 to-emerald-600" />
+                  </div>
+                  <span className="font-medium text-brand-dark-text">5,000+ learners</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="flex text-yellow-400">
+                    {'★'.repeat(5)}
+                  </div>
+                  <span className="font-medium text-brand-dark-text">4.9/5 rating</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Stats Section */}
+        <section className="border-y border-brand-dark-border bg-brand-dark-surface/30 px-4 py-16 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl">
+            <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+              {[
+                { value: '5k+', label: 'Career transitions', icon: Users },
+                { value: '100+', label: 'Live sessions', icon: Video },
+                { value: '95%', label: 'Job placement', icon: Award },
+                { value: '24/7', label: 'Support', icon: Clock },
+              ].map((stat, i) => {
+                const Icon = stat.icon
+                return (
+                  <div key={i} className="text-center">
+                    <div className="mb-3 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-accent/10 text-brand-accent">
                       <Icon className="h-6 w-6" />
                     </div>
+                    <div className="font-heading text-3xl font-bold text-brand-dark-text">
+                      {stat.value}
+                    </div>
+                    <div className="mt-1 text-sm text-brand-dark-textSecondary">
+                      {stat.label}
+                    </div>
                   </div>
-                  <div className="relative mt-6 inline-flex items-center gap-2 text-sm font-semibold text-brand-textPrimary">
-                    Explore category
-                    <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-brand-border bg-brand-surface transition-all group-hover:bg-brand-accent group-hover:text-white">
-                      <ArrowRight className="h-4 w-4" />
-                    </span>
-                  </div>
-                </a>
-              )
-            })}
+                )
+              })}
+            </div>
           </div>
         </section>
 
-        {/* Why choose */}
-        <section id="why" className="mt-14 border-t border-brand-border bg-brand-surface" aria-labelledby="why-heading">
-          <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8 sm:py-24">
-            <div className="mx-auto max-w-2xl text-center">
-              {s.whyBadge ? (
-                <span className="text-sm font-semibold uppercase tracking-wide text-brand-accent">{s.whyBadge}</span>
-              ) : null}
-              <h2 id="why-heading" className="mt-3 font-heading text-3xl font-bold text-brand-textPrimary sm:text-4xl">
-                {s.whyHeading}
+        {/* Career Programs Section */}
+        <section className="bg-brand-dark-bg px-4 py-20 sm:px-6 lg:px-8 lg:py-32">
+          <div className="mx-auto max-w-7xl">
+            <div className="mb-12 text-center">
+              <h2 className="mb-4 font-heading text-4xl font-black text-brand-dark-text sm:text-5xl">
+                Which Career Path Is Right for You?
               </h2>
-              <p className="mt-4 text-base text-brand-textSecondary sm:text-lg">{s.whySubheading}</p>
+              <p className="mx-auto max-w-2xl text-lg text-brand-dark-textSecondary">
+                Whether you&apos;re a student, graduate, working professional, or switching careers — choose a program built around real workplace skills.
+              </p>
             </div>
 
-            <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {s.featureLabels.map((label, i) => (
-                <div
-                  key={`${label}-${i}`}
-                  className="flex items-center gap-3 rounded-2xl border border-brand-border bg-white p-4 shadow-card transition-all hover:-translate-y-0.5 hover:shadow-cardHover"
-                >
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-accentLight text-brand-accent">
-                    <ClipboardCheck className="h-5 w-5" />
-                  </span>
-                  <span className="text-sm font-medium text-brand-textPrimary">{label}</span>
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+              {courses.length > 0 ? (
+                courses.map((course) => (
+                  <CareerProgramCard key={course._id} course={course} initialAuthenticated={isAuthenticated} />
+                ))
+              ) : (
+                <div className="col-span-full text-center py-12">
+                  <p className="text-brand-dark-textSecondary">No courses available at the moment. Check back soon!</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+
+        {/* Placement Support Section */}
+        <section className="bg-brand-dark-bg px-4 py-20 sm:px-6 lg:px-8 lg:py-32">
+          <div className="mx-auto max-w-7xl">
+            <div className="mb-12">
+              <h2 className="mb-4 font-heading text-4xl font-black text-brand-dark-text sm:text-5xl">
+                1 Year Placement Support to Get Your Dream Job
+              </h2>
+              <p className="max-w-3xl text-lg text-brand-dark-textSecondary">
+                Clear the cut-off marks in your graduation project to get access to 1 year placement support.
+              </p>
+            </div>
+
+            <div className="grid gap-8 md:grid-cols-2">
+              {[
+                {
+                  icon: (
+                    <svg className="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                  ),
+                  title: 'Resume review',
+                  description: 'Perfect your resume with detailed feedback from mentors to make sure you don\'t miss out on getting shortlisted for your dream role.',
+                },
+                {
+                  icon: (
+                    <svg className="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                  ),
+                  title: '1:1 mock interviews with mentors',
+                  description: 'Crack interviews at top tech companies by practising your interviewing skills with industry professionals.',
+                },
+                {
+                  icon: (
+                    <svg className="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                  ),
+                  title: 'Practice real world interview questions',
+                  description: 'Practise from our database of real world interview questions and get ready to tackle any challenge that comes your way.',
+                },
+                {
+                  icon: (
+                    <svg className="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  ),
+                  title: 'Interviews with hiring partners',
+                  description: 'Get access to interviews with top technology companies.',
+                },
+              ].map((item, i) => (
+                <div key={i} className="flex gap-6">
+                  <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-white text-black">
+                    {item.icon}
+                  </div>
+                  <div>
+                    <h3 className="mb-2 font-heading text-xl font-bold text-brand-dark-text">
+                      {item.title}
+                    </h3>
+                    <p className="text-brand-dark-textSecondary">
+                      {item.description}
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Closing CTA */}
-        <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
-          <div className="relative overflow-hidden rounded-[2.5rem] bg-accent-gradient px-6 py-14 text-center shadow-accentLg sm:px-12">
-            <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-white/10 blur-3xl" />
-            <div className="pointer-events-none absolute -bottom-20 -left-16 h-64 w-64 rounded-full bg-black/10 blur-3xl" />
-            <div className="relative mx-auto max-w-2xl">
-              <h2 className="font-heading text-3xl font-bold text-white sm:text-4xl">{s.ctaHeading}</h2>
-              <p className="mt-4 text-base text-white/90 sm:text-lg">{s.ctaSubtitle}</p>
-              <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-                <SignInCta
-                  label={s.ctaPrimaryLabel}
-                  authedLabel="Go to dashboard"
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white px-8 py-3.5 font-semibold text-brand-accentDark shadow-lg shadow-black/10 transition-transform hover:-translate-y-0.5 sm:w-auto"
-                />
-                {s.ctaSecondaryLabel ? (
-                  <a
-                    href={s.ctaSecondaryHref || '/courses'}
-                    className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-white/40 bg-white/10 px-8 py-3.5 font-semibold text-white backdrop-blur transition hover:bg-white/20 sm:w-auto"
-                  >
-                    {s.ctaSecondaryLabel}
-                    <ArrowRight className="h-4 w-4" />
-                  </a>
-                ) : null}
+        {/* Global Network Section */}
+        <section className="relative overflow-hidden bg-brand-dark-bg px-4 py-20 sm:px-6 lg:px-8 lg:py-32">
+          {/* Background Image */}
+          <div 
+            className="absolute inset-0 opacity-30"
+            style={{
+              backgroundImage: 'url(https://assets.science.nasa.gov/content/dam/science/esd/eo/images/imagerecords/144000/144898/BlackMarble_2016_01deg.jpg)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat'
+            }}
+          />
+          {/* Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-b from-brand-dark-bg/80 via-brand-dark-bg/60 to-brand-dark-bg/80" />
+          
+          <div className="relative mx-auto max-w-7xl text-center">
+            <h2 className="mb-16 font-heading text-4xl font-black text-brand-dark-text sm:text-5xl">
+              Join our rapidly growing learning network
+            </h2>
+
+            <div className="grid gap-12 md:grid-cols-3">
+              <div>
+                <div className="mb-4 font-heading text-6xl font-black text-brand-dark-text sm:text-7xl">
+                  26
+                </div>
+                <p className="text-xl font-semibold text-brand-dark-text">
+                  Countries
+                </p>
+              </div>
+              
+              <div>
+                <div className="mb-4 font-heading text-6xl font-black text-brand-dark-text sm:text-7xl">
+                  1000+
+                </div>
+                <p className="text-xl font-semibold text-brand-dark-text">
+                  Companies
+                </p>
+              </div>
+              
+              <div>
+                <div className="mb-4 font-heading text-6xl font-black text-brand-dark-text sm:text-7xl">
+                  15000+
+                </div>
+                <p className="text-xl font-semibold text-brand-dark-text">
+                  Learners
+                </p>
               </div>
             </div>
           </div>
         </section>
+
+        {/* Hire from Us Section */}
+        <section className="relative overflow-hidden bg-gradient-to-br from-brand-accent via-orange-600 to-yellow-600 px-4 py-20 sm:px-6 lg:px-8 lg:py-32">
+          {/* Decorative Background Pattern */}
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute bottom-0 left-0 right-0 flex items-end justify-around">
+              {/* Decorative shapes */}
+              <div className="h-32 w-32 rounded-t-full bg-white" />
+              <div className="h-24 w-24 -translate-y-8 rounded-t-full bg-white" />
+              <div className="h-40 w-40 rounded-t-full bg-white" />
+              <div className="h-28 w-28 -translate-y-4 rounded-t-full bg-white" />
+              <div className="h-36 w-36 rounded-t-full bg-white" />
+              <div className="h-24 w-24 -translate-y-8 rounded-t-full bg-white" />
+              <div className="h-32 w-32 rounded-t-full bg-white" />
+            </div>
+          </div>
+          
+          {/* Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-orange-600/20" />
+          
+          <div className="relative mx-auto max-w-7xl text-center">
+            <h2 className="mb-4 font-heading text-4xl font-black text-white sm:text-5xl">
+              Hire from us
+            </h2>
+            <p className="mx-auto mb-10 max-w-2xl text-lg text-white/95">
+              Become a partner companies and be first in line to the amazing talent that graduates from our cohorts
+            </p>
+            
+            <button className="rounded-xl bg-black px-8 py-4 font-bold text-white shadow-xl transition hover:bg-gray-900 hover:scale-105">
+              Get in touch
+            </button>
+          </div>
+        </section>
+
       </main>
 
       <SiteFooter

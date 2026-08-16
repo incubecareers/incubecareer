@@ -4,7 +4,7 @@ import { SectionTitle, SectionText, ListItem } from '@/components/ui/typography'
 const sections = [
   {
     title: 'Acceptance of Terms',
-    body: 'By accessing or using Daily Tutors, you agree to be bound by these Terms and Conditions. If you do not agree, please do not use the platform.',
+    body: 'By accessing or using Incube Careers, you agree to be bound by these Terms and Conditions. If you do not agree, please do not use the platform.',
   },
   {
     title: 'User Accounts',
@@ -16,7 +16,7 @@ const sections = [
   },
   {
     title: 'Intellectual Property',
-    body: 'All course content, notes, videos, materials, and platform design are owned by Daily Tutors or its licensors and may not be copied, redistributed, or reused without permission.',
+    body: 'All course content, notes, videos, materials, and platform design are owned by Incube Careers or its licensors and may not be copied, redistributed, or reused without permission.',
   },
   {
     title: 'Payments',
@@ -44,7 +44,7 @@ const sections = [
   },
   {
     title: 'Limitation of Liability',
-    body: 'Daily Tutors shall not be liable for indirect, incidental, or consequential damages arising from the use of the platform, except where prohibited by law.',
+    body: 'Incube Careers shall not be liable for indirect, incidental, or consequential damages arising from the use of the platform, except where prohibited by law.',
   },
   {
     title: 'Governing Law (India)',
@@ -52,20 +52,20 @@ const sections = [
   },
   {
     title: 'Contact',
-    body: 'If you have any questions regarding these Terms and Conditions, please contact us at support@dailytutors.in.',
+    body: 'If you have any questions regarding these Terms and Conditions, please contact us at incubecareers@gmail.com.',
   },
 ]
 
 export const metadata = {
   title: 'Terms and Conditions',
-  description: 'Review the terms governing your use of Daily Tutors courses and services.',
+  description: 'Review the terms governing your use of Incube Careers courses and services.',
 }
 
 export default function TermsAndConditionsPage() {
   return (
     <LegalPage
       title="Terms and Conditions"
-      description="These terms explain how you may use the Daily Tutors platform and the responsibilities of both parties."
+      description="These terms explain how you may use the Incube Careers platform and the responsibilities of both parties."
       updated="19 July 2026"
       badge="Terms"
       breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Terms and Conditions' }]}

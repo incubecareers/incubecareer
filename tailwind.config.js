@@ -12,40 +12,51 @@ module.exports = {
       },
       colors: {
         brand: {
-          primary: '#FFFFFF',
-          surface: '#FBF8F7',
-          accent: '#FF3131',
-          accentDark: '#D81F1F',
-          accentLight: '#FFEAEA',
-          secondary: '#1A1A1A',
-          secondaryDark: '#000000',
-          textPrimary: '#1A1A1A',
-          textSecondary: '#6B6B6B',
-          border: '#EAEAEA',
-          success: '#1F9D55',
+          // Primary = dark background (global dark theme)
+          primary: '#141414',
+          surface: '#141414',
+          accent: '#FE5529',
+          accentDark: '#E04820',
+          accentLight: '#3D1A0F',
+          accentTint: '#2A1208',
+          secondary: '#737373',
+          secondaryDark: '#A0A0A0',
+          textPrimary: '#FFFFFF',
+          textSecondary: '#A0A0A0',
+          border: '#2A2A2A',
+          success: '#22C55E',
           warning: '#F5A623',
+          // Dark theme tokens (same as global now)
+          dark: {
+            bg: '#0A0A0A',
+            surface: '#141414',
+            card: '#1A1A1A',
+            border: '#2A2A2A',
+            text: '#FFFFFF',
+            textSecondary: '#A0A0A0',
+          },
         },
       },
       fontFamily: {
-        // Poppins for body / UI text and headings
-        sans: ['var(--font-poppins)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        heading: ['var(--font-poppins)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        // League Spartan for all text
+        sans: ['var(--font-league-spartan)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        heading: ['var(--font-league-spartan)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
       boxShadow: {
         card: '0 1px 2px 0 rgba(16,24,40,0.04), 0 1px 3px 0 rgba(16,24,40,0.06)',
         cardHover:
           '0 20px 40px -16px rgba(16,24,40,0.16), 0 8px 16px -8px rgba(16,24,40,0.08)',
-        accent: '0 8px 20px -6px rgba(255,49,49,0.45)',
-        accentLg: '0 18px 40px -12px rgba(255,49,49,0.5)',
-        glow: '0 0 0 1px rgba(255,49,49,0.08), 0 12px 32px -12px rgba(255,49,49,0.28)',
+        accent: '0 8px 20px -6px rgba(254,85,41,0.45)',
+        accentLg: '0 18px 40px -12px rgba(254,85,41,0.5)',
+        glow: '0 0 0 1px rgba(254,85,41,0.08), 0 12px 32px -12px rgba(254,85,41,0.28)',
       },
       backgroundImage: {
-        'accent-gradient': 'linear-gradient(135deg, #FF3131 0%, #D81F1F 100%)',
-        'accent-gradient-soft': 'linear-gradient(135deg, #FF5A5A 0%, #D81F1F 100%)',
+        'accent-gradient': 'linear-gradient(135deg, #FE5529 0%, #E04820 100%)',
+        'accent-gradient-soft': 'linear-gradient(135deg, #FE6B42 0%, #E04820 100%)',
         'hero-glow':
-          'radial-gradient(60% 60% at 50% 0%, #FFEAEA 0%, rgba(255,234,234,0) 70%)',
+          'radial-gradient(60% 60% at 50% 0%, #FFF1EA 0%, rgba(255,241,234,0) 70%)',
         'hero-mesh':
-          'radial-gradient(45% 55% at 15% 20%, rgba(255,90,90,0.16) 0%, rgba(255,90,90,0) 60%), radial-gradient(40% 50% at 85% 10%, rgba(255,49,49,0.12) 0%, rgba(255,49,49,0) 55%), radial-gradient(50% 60% at 60% 100%, rgba(216,31,31,0.08) 0%, rgba(216,31,31,0) 60%)',
+          'radial-gradient(45% 55% at 15% 20%, rgba(254,85,41,0.16) 0%, rgba(254,85,41,0) 60%), radial-gradient(40% 50% at 85% 10%, rgba(254,85,41,0.12) 0%, rgba(254,85,41,0) 55%), radial-gradient(50% 60% at 60% 100%, rgba(224,72,32,0.08) 0%, rgba(224,72,32,0) 60%)',
       },
       keyframes: {
         'fade-up': {

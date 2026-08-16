@@ -7,7 +7,7 @@ import {
   STUDENT_TOKEN_MAX_AGE,
 } from '@/lib/studentJwt'
 
-const CANONICAL_HOST = 'www.dailytutors.in'
+const CANONICAL_HOST = 'www.incubecareers.com'
 
 // Dev flag: when auth is disabled, let every request through untouched.
 const AUTH_DISABLED = process.env.NEXT_PUBLIC_DISABLE_AUTH === 'true'
@@ -58,7 +58,7 @@ export default async function middleware(req) {
   if (pathname.startsWith('/api/auth')) return pass
 
   const host = req.headers.get('host')?.split(':')[0] || req.nextUrl.hostname
-  if (host === 'dailytutors.in') {
+  if (host === 'incubecareers.com') {
     const url = req.nextUrl.clone()
     url.hostname = CANONICAL_HOST
     return NextResponse.redirect(url, 308)

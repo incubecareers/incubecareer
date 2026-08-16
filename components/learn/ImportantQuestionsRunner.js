@@ -222,7 +222,7 @@ export default function ImportantQuestionsRunner({ courseId, course, chapters })
             <Link href={`/learn/${courseId}`} className="shrink-0">
               <Image
                 src="/logo-full.png"
-                alt="Daily Tutors"
+                alt="Incube Careers"
                 width={200}
                 height={44}
                 sizes="(max-width: 640px) 160px, 200px"

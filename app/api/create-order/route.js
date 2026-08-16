@@ -78,6 +78,13 @@ export async function POST(req) {
     })
   } catch (error) {
     console.error('Create order failed:', error)
+    console.error('Error details:', {
+      name: error?.name,
+      message: error?.message,
+      stack: error?.stack,
+      hasKeyId: !!process.env.RAZORPAY_KEY_ID,
+      hasKeySecret: !!process.env.RAZORPAY_KEY_SECRET,
+    })
     // Return the underlying error message to help the frontend surface useful
     // diagnostics while keeping secrets out of responses.
     return NextResponse.json(
