@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from 'next/link'
-import { GraduationCap, Users, Sparkles, Tag } from 'lucide-react'
+import { GraduationCap, Users, Sparkles, Tag, ArrowRight, Clock, Award } from 'lucide-react'
 
 // Marketing course card used on the catalog and the dashboard "explore" grid.
 export default function CourseCard({ course: c }) {
@@ -12,58 +12,70 @@ export default function CourseCard({ course: c }) {
   const isFree = !c.originalPrice && !c.discountPrice
 
   return (
-    <div
-      className="group flex flex-col rounded-2xl border bg-white p-3 shadow-card transition-all hover:-translate-y-1 hover:shadow-cardHover"
-      style={{ borderColor: c.cardBorderColor || '#EAEAEA' }}
-    >
-      {/* Thumbnail + Badge ribbon */}
-      <Link
-        href={`/courses/${c.slug}`}
-        className="relative block aspect-video w-full overflow-hidden rounded-xl bg-brand-accentLight/40"
-      >
+    <div className="group relative flex flex-col overflow-hidden rounded-2xl border border-brand-border bg-gradient-to-br from-white to-gray-50 shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
+      {/* Decorative gradient overlay */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-brand-accent/5 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+      
+      {/* Discount badge - floating top right */}
+      {hasDiscount && (
+        <div className="absolute right-3 top-3 z-20 flex items-center gap-1 rounded-full bg-gradient-to-r from-green-500 to-emerald-600 px-3 py-1.5 shadow-lg">
+          <Sparkles className="h-3.5 w-3.5 text-white" />
+          <span className="text-xs font-bold text-white">{discountPct}% OFF</span>
+        </div>
+      )}
+
+      {/* Thumbnail with overlay gradient */}
+      <Link href={`/courses/${c.slug}`} className="relative block aspect-video w-full overflow-hidden">
+        {/* Badge ribbon */}
         <span
-          className="absolute left-0 top-3 z-10 inline-flex items-center gap-1.5 rounded-r-md py-1 pl-3 pr-3.5 text-[11px] font-bold uppercase tracking-wide text-white shadow-accent"
-          style={{ backgroundColor: c.badgeColor || '#FF3131' }}
+          className="absolute left-0 top-4 z-10 inline-flex items-center gap-1.5 rounded-r-lg py-1.5 pl-3 pr-4 text-xs font-bold uppercase tracking-wide text-white shadow-xl backdrop-blur-sm"
+          style={{ backgroundColor: c.badgeColor || '#FE5529' }}
         >
-          <span className="h-1.5 w-1.5 rounded-full bg-white" />
+          <span className="h-2 w-2 animate-pulse rounded-full bg-white" />
           {c.badgeLabel || 'Online'}
         </span>
+
+        {/* Dark gradient overlay on image */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+
         {c.thumbnail ? (
           <img
             src={c.thumbnail}
             alt={c.title}
             loading="lazy"
             decoding="async"
-            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
           />
         ) : (
-          <div className="flex h-full items-center justify-center text-brand-accent/40">
-            <GraduationCap className="h-12 w-12" />
+          <div className="flex h-full items-center justify-center bg-gradient-to-br from-brand-accent/20 to-brand-accentDark/20">
+            <GraduationCap className="h-16 w-16 text-brand-accent opacity-40" />
           </div>
         )}
       </Link>
 
-      {/* Body */}
-      <div className="flex flex-1 flex-col px-1 pt-3">
-        <div className="flex items-start justify-between gap-2">
-          <Link href={`/courses/${c.slug}`}>
-            <h3 className="font-heading text-base font-semibold text-brand-textPrimary group-hover:text-brand-accentDark">
+      {/* Card Body */}
+      <div className="relative flex flex-1 flex-col p-4">
+        {/* Title and Language */}
+        <div className="flex items-start justify-between gap-3">
+          <Link href={`/courses/${c.slug}`} className="flex-1">
+            <h3 className="font-heading text-lg font-bold leading-tight text-gray-900 transition-colors group-hover:text-brand-accent">
               {c.title}
             </h3>
           </Link>
           {c.language && (
-            <span className="shrink-0 rounded-full bg-brand-surface px-2.5 py-1 text-xs font-medium text-brand-textSecondary">
+            <span className="shrink-0 rounded-lg bg-blue-100 px-2.5 py-1 text-xs font-semibold text-blue-700">
               {c.language}
             </span>
           )}
         </div>
-        {/* Display all selected categories/streams */}
+
+        {/* Category badges - multiple streams */}
         {c.categoryNames && c.categoryNames.length > 0 ? (
-          <div className="mt-2 flex flex-wrap gap-1.5">
+          <div className="mt-3 flex flex-wrap gap-2">
             {c.categoryNames.map((catName, idx) => (
               <span
                 key={idx}
-                className="inline-flex items-center gap-1 rounded-full bg-brand-accentLight px-2.5 py-1 text-xs font-semibold text-brand-accentDark"
+                className="inline-flex items-center gap-1 rounded-lg bg-gradient-to-r from-orange-50 to-red-50 px-2.5 py-1 text-xs font-semibold text-brand-accent shadow-sm"
               >
                 <Tag className="h-3 w-3" />
                 {catName}
@@ -71,95 +83,90 @@ export default function CourseCard({ course: c }) {
             ))}
           </div>
         ) : c.category ? (
-          <span className="mt-2 inline-flex w-fit items-center gap-1 rounded-full bg-brand-accentLight px-2.5 py-1 text-xs font-semibold text-brand-accentDark">
+          <span className="mt-3 inline-flex w-fit items-center gap-1 rounded-lg bg-gradient-to-r from-orange-50 to-red-50 px-2.5 py-1 text-xs font-semibold text-brand-accent shadow-sm">
             <Tag className="h-3 w-3" />
             {c.category}
           </span>
         ) : null}
 
-        {/* Meta rows */}
-        <div className="mt-3 space-y-1.5 text-sm text-brand-textSecondary">
+        {/* Meta information */}
+        <div className="mt-4 space-y-2 text-sm text-gray-600">
           {c.examTarget && (
             <p className="flex items-center gap-2">
               <Users className="h-4 w-4 shrink-0 text-brand-accent" />
-              For {c.examTarget} Aspirants
+              <span className="font-medium">For {c.examTarget} Students</span>
             </p>
           )}
           {c.instructorName && (
             <p className="flex items-center gap-2">
-              <GraduationCap className="h-4 w-4 shrink-0 text-brand-accent" />
-              {c.instructorName}
+              <Award className="h-4 w-4 shrink-0 text-brand-accent" />
+              <span className="font-medium">{c.instructorName}</span>
             </p>
           )}
         </div>
 
-        {/* Premium feature strip */}
-        <div className="mt-3 flex items-center justify-between rounded-lg bg-brand-dark-card px-3 py-2">
-          <span className="flex items-center gap-2 text-xs font-medium text-white">
-            <Sparkles className="h-4 w-4 text-brand-warning" />
-            {c.premiumFeatureText || 'Premium Features Included'}
+        {/* Premium features banner */}
+        <div className="mt-4 flex items-center justify-between rounded-xl bg-gradient-to-r from-gray-900 to-gray-800 px-4 py-3 shadow-md">
+          <span className="flex items-center gap-2 text-xs font-semibold text-white">
+            <Sparkles className="h-4 w-4 text-yellow-400" />
+            {c.premiumFeatureText || 'Premium Features'}
           </span>
           <span
-            className="rounded-md px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white"
+            className="rounded-lg px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow"
             style={{ backgroundColor: c.premiumBadgeColor || '#F59E0B' }}
           >
-            {c.premiumBadgeLabel || 'Pro'}
+            {c.premiumBadgeLabel || 'ELITE'}
           </span>
         </div>
 
         <div className="mt-4 flex-1" />
 
-        {/* Price */}
-        <div className="pt-3" style={{ borderTop: `1px solid ${c.cardBorderColor || '#EAEAEA'}` }}>
-          <div className="flex items-end justify-between gap-2">
+        {/* Price section */}
+        <div className="mt-4 rounded-xl border-t-2 border-gray-100 pt-4">
+          <div className="flex items-center justify-between">
             <div>
               {isFree ? (
-                <span className="font-heading text-xl font-bold text-brand-success">
-                  Free
-                </span>
+                <span className="font-heading text-2xl font-bold text-green-600">Free</span>
               ) : (
-                <span className="flex items-baseline gap-2">
-                  <span className="font-heading text-xl font-bold text-brand-accent">
+                <div className="flex items-baseline gap-2">
+                  <span className="font-heading text-2xl font-bold text-brand-accent">
                     ₹{price.toLocaleString('en-IN')}
                   </span>
                   {hasDiscount && (
-                    <span className="text-sm text-brand-textSecondary line-through">
+                    <span className="text-sm font-medium text-gray-400 line-through">
                       ₹{c.originalPrice.toLocaleString('en-IN')}
                     </span>
                   )}
-                </span>
+                </div>
               )}
-              <p className="text-[11px] uppercase tracking-wide text-brand-textSecondary">
-                For full batch
+              <p className="mt-0.5 text-[11px] font-medium uppercase tracking-wide text-gray-500">
+                Complete Program
               </p>
             </div>
-            {hasDiscount && (
-              <span className="mb-0.5 flex items-center gap-1 rounded-full bg-brand-success/10 px-2 py-1 text-xs font-semibold text-brand-success">
-                <Tag className="h-3.5 w-3.5" />
-                {discountPct}% off
-              </span>
-            )}
           </div>
         </div>
 
-        {/* CTAs */}
-        <div className="mt-3 grid grid-cols-2 gap-3">
+        {/* Action buttons */}
+        <div className="mt-4 grid grid-cols-5 gap-3">
           <Link
             href={`/courses/${c.slug}`}
-            className="rounded-xl border px-4 py-2.5 text-center text-sm font-semibold transition-colors hover:bg-opacity-10"
+            className="col-span-2 flex items-center justify-center gap-2 rounded-xl border-2 px-4 py-3 text-center text-sm font-bold transition-all hover:scale-105 hover:shadow-md"
             style={{
-              borderColor: c.exploreButtonColor || '#FF3131',
-              color: c.exploreButtonColor || '#FF3131',
+              borderColor: c.exploreButtonColor || '#FE5529',
+              color: c.exploreButtonColor || '#FE5529',
             }}
           >
             Explore
           </Link>
           <Link
             href={`/courses/${c.slug}`}
-            className="rounded-xl px-4 py-2.5 text-center text-sm font-semibold text-white shadow-accent transition-transform hover:-translate-y-0.5"
-            style={{ backgroundColor: c.buyNowButtonColor || '#FF3131' }}
+            className="col-span-3 flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-center text-sm font-bold text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl"
+            style={{ 
+              background: `linear-gradient(135deg, ${c.buyNowButtonColor || '#FE5529'} 0%, ${c.buyNowButtonColor || '#E04820'} 100%)`
+            }}
           >
-            Buy Now
+            Enroll Now
+            <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
       </div>
