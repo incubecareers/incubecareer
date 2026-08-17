@@ -86,7 +86,7 @@ export default async function Home() {
 
       <main>
         {/* Hero Section - Dark NextLeap Style */}
-        <section className="relative overflow-hidden bg-brand-dark-bg px-4 py-20 sm:px-6 lg:px-8 lg:py-32">
+        <section className="relative overflow-hidden bg-brand-dark-bg px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
           {/* Gradient orbs */}
           <div className="absolute right-0 top-0 h-[500px] w-[500px] rounded-full bg-brand-accent/20 blur-[120px]" />
           <div className="absolute bottom-0 left-0 h-[400px] w-[400px] rounded-full bg-purple-500/10 blur-[100px]" />
@@ -148,7 +148,7 @@ export default async function Home() {
         </section>
 
         {/* Stats Section */}
-        <section className="border-y border-brand-dark-border bg-brand-dark-surface/30 px-4 py-16 sm:px-6 lg:px-8">
+        <section className="border-y border-brand-dark-border bg-brand-dark-surface/30 px-4 py-10 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-7xl">
             <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
               {[
@@ -177,7 +177,7 @@ export default async function Home() {
         </section>
 
         {/* Career Programs Section */}
-        <section className="bg-brand-dark-bg px-4 py-20 sm:px-6 lg:px-8 lg:py-32">
+        <section className="bg-brand-dark-bg px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
           <div className="mx-auto max-w-7xl">
             <div className="mb-12 text-center">
               <h2 className="mb-4 font-heading text-4xl font-black text-brand-dark-text sm:text-5xl">
