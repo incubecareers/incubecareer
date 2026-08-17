@@ -54,16 +54,16 @@ export default function CourseCard({ course: c }) {
       </Link>
 
       {/* Card Body */}
-      <div className="relative flex flex-1 flex-col p-5">
+      <div className="relative flex flex-1 flex-col p-3">
         {/* Title and Language */}
-        <div className="flex items-start justify-between gap-3">
+        <div className="flex items-start justify-between gap-2">
           <Link href={`/courses/${c.slug}`} className="flex-1">
-            <h3 className="font-heading text-lg font-bold leading-tight text-gray-900 transition-colors group-hover:text-orange-600 line-clamp-2">
+            <h3 className="font-heading text-sm font-bold leading-tight text-gray-900 transition-colors group-hover:text-orange-600 line-clamp-1">
               {c.title}
             </h3>
           </Link>
           {c.language && (
-            <span className="shrink-0 rounded-lg bg-orange-500 px-2.5 py-1 text-xs font-bold text-white shadow-md">
+            <span className="shrink-0 rounded-lg bg-orange-500 px-2 py-0.5 text-[10px] font-bold text-white shadow-md">
               {c.language}
             </span>
           )}
@@ -71,94 +71,53 @@ export default function CourseCard({ course: c }) {
 
         {/* Category badges - multiple streams */}
         {c.categoryNames && c.categoryNames.length > 0 ? (
-          <div className="mt-3 flex flex-wrap gap-2">
-            {c.categoryNames.map((catName, idx) => (
+          <div className="mt-2 flex flex-wrap gap-1">
+            {c.categoryNames.slice(0, 3).map((catName, idx) => (
               <span
                 key={idx}
-                className="inline-flex items-center gap-1 rounded-lg bg-orange-500 px-3 py-1.5 text-xs font-bold text-white shadow-md"
+                className="inline-flex items-center gap-0.5 rounded bg-orange-500 px-2 py-0.5 text-[10px] font-bold text-white"
               >
-                <Tag className="h-3.5 w-3.5 text-white" />
+                <Tag className="h-2.5 w-2.5 text-white" />
                 {catName}
               </span>
             ))}
           </div>
         ) : c.category ? (
-          <span className="mt-3 inline-flex w-fit items-center gap-1 rounded-lg bg-orange-500 px-3 py-1.5 text-xs font-bold text-white shadow-md">
-            <Tag className="h-3.5 w-3.5 text-white" />
+          <span className="mt-2 inline-flex w-fit items-center gap-0.5 rounded bg-orange-500 px-2 py-0.5 text-[10px] font-bold text-white">
+            <Tag className="h-2.5 w-2.5 text-white" />
             {c.category}
           </span>
         ) : null}
 
-        {/* Learning bullet points */}
-        {learningPoints.length > 0 && (
-          <div className="mt-4 space-y-2">
-            {learningPoints.slice(0, 3).map((point, idx) => (
-              <div key={idx} className="flex items-start gap-2 text-sm text-gray-700">
-                <CheckCircle2 className="h-4 w-4 shrink-0 text-green-600 mt-0.5" />
-                <span className="line-clamp-1">{point}</span>
-              </div>
-            ))}
-          </div>
-        )}
+        <div className="mt-2 flex-1" />
 
-        {/* Premium banner */}
-        <div className="mt-4 flex items-center justify-between rounded-xl bg-gradient-to-r from-gray-900 to-gray-800 px-4 py-3 shadow-md">
-          <span className="flex items-center gap-2 text-xs font-semibold text-white">
-            <Sparkles className="h-4 w-4 text-yellow-400" />
-            {c.premiumFeatureText || 'Premium Features'}
-          </span>
-          <span
-            className="rounded-lg px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow"
-            style={{ backgroundColor: c.premiumBadgeColor || '#F59E0B' }}
-          >
-            {c.premiumBadgeLabel || 'ELITE'}
-          </span>
-        </div>
-
-        <div className="mt-4 flex-1" />
-
-        {/* Price section */}
-        <div className="mt-4 rounded-xl border-t-2 border-gray-100 pt-4">
-          {isFree ? (
-            <span className="font-heading text-2xl font-bold text-green-600">Free</span>
-          ) : (
-            <div className="flex items-baseline gap-2">
-              <span className="font-heading text-2xl font-bold text-orange-600">
-                ₹{price.toLocaleString('en-IN')}
-              </span>
-              {hasDiscount && (
-                <span className="text-sm font-medium text-gray-400 line-through">
-                  ₹{c.originalPrice.toLocaleString('en-IN')}
+        {/* Price - Compact */}
+        <div className="mt-2 flex items-center justify-between">
+          <div>
+            {isFree ? (
+              <span className="font-heading text-lg font-bold text-green-600">Free</span>
+            ) : (
+              <div className="flex items-baseline gap-1">
+                <span className="font-heading text-lg font-bold text-orange-600">
+                  ₹{price.toLocaleString('en-IN')}
                 </span>
-              )}
-            </div>
-          )}
-          <p className="mt-0.5 text-[11px] font-medium uppercase tracking-wide text-gray-500">
-            Complete Program
-          </p>
-        </div>
-
-        {/* Action buttons */}
-        <div className="mt-4 grid grid-cols-5 gap-3">
+                {hasDiscount && (
+                  <span className="text-[10px] text-gray-400 line-through">
+                    ₹{c.originalPrice.toLocaleString('en-IN')}
+                  </span>
+                )}
+              </div>
+            )}
+          </div>
           <Link
             href={`/courses/${c.slug}`}
-            className="col-span-2 flex items-center justify-center gap-2 rounded-xl border-2 px-4 py-3 text-center text-sm font-bold transition-all hover:scale-105 hover:shadow-md"
-            style={{
-              borderColor: c.exploreButtonColor || '#FE5529',
-              color: c.exploreButtonColor || '#FE5529',
-            }}
-          >
-            Explore
-          </Link>
-          <Link
-            href={`/courses/${c.slug}`}
-            className="col-span-3 flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-center text-sm font-bold text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl"
+            className="flex items-center justify-center gap-1 rounded-lg px-3 py-2 text-xs font-bold text-white"
             style={{ 
               background: `linear-gradient(135deg, ${c.buyNowButtonColor || '#FE5529'} 0%, ${c.buyNowButtonColor || '#E04820'} 100%)`
             }}
           >
-            Enroll Now
-            <ArrowRight className="h-4 w-4" />
+            Enroll
+            <ArrowRight className="h-3 w-3" />
           </Link>
         </div>
       </div>
