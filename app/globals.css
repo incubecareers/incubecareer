@@ -86,8 +86,8 @@ h6 {
 
 /* Brand-tinted text selection */
 ::selection {
-  background-color: rgba(254, 85, 41, 0.16);
-  color: #1B1B1D;
+  background-color: rgba(254, 85, 41, 0.3);
+  color: #FFFFFF;
 }
 
 /* Consistent, accessible focus ring for interactive elements */
@@ -119,6 +119,32 @@ summary:focus-visible {
   *::-webkit-scrollbar-thumb:hover {
     background-color: #FE5529;
   }
+}
+
+/* Ensure text is always visible and readable */
+@layer utilities {
+  .text-visible {
+    color: #FFFFFF !important;
+  }
+  .text-visible-secondary {
+    color: #A0A0A0 !important;
+  }
+}
+
+/* Force dark text on light backgrounds to be visible */
+.bg-white *,
+[class*="bg-gray"] *,
+[class*="bg-light"] * {
+  color: #FFFFFF !important;
+}
+
+/* Ensure links are visible */
+a {
+  color: inherit;
+}
+
+a:hover {
+  color: #FE5529;
 }
 
 @media (prefers-reduced-motion: reduce) {
