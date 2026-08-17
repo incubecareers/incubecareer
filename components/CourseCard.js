@@ -81,7 +81,7 @@ export default function CourseCard({ course: c }) {
         </div>
 
         {/* Premium feature strip */}
-        <div className="mt-3 flex items-center justify-between rounded-lg bg-brand-textPrimary px-3 py-2">
+        <div className="mt-3 flex items-center justify-between rounded-lg bg-brand-dark-card px-3 py-2">
           <span className="flex items-center gap-2 text-xs font-medium text-white">
             <Sparkles className="h-4 w-4 text-brand-warning" />
             {c.premiumFeatureText || 'Premium Features Included'}
