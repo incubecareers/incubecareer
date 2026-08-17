@@ -72,10 +72,28 @@ export default async function Home() {
     '@context': 'https://schema.org',
     '@type': 'EducationalOrganization',
     name: 'Incube Careers',
+    alternateName: 'Incube Career Training Institute',
     url: 'https://www.incubecareers.com',
     logo: 'https://www.incubecareers.com/logo.png',
-    description: 'Live learning with industry experts. Jobs at technology companies.',
+    description: 'Best HR, Business Analyst, Finance & Accounts training institute in Bangalore with 1 year job placement support. Live online classes for career switchers.',
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Bangalore',
+      addressRegion: 'Karnataka',
+      addressCountry: 'IN'
+    },
+    areaServed: ['Bangalore', 'Karnataka', 'India'],
+    knowsAbout: ['HR Training', 'Business Analysis', 'Finance', 'Accounting', 'Career Development', 'Job Placement'],
     sameAs: (s.socialLinks || []).map((x) => x.href).filter((h) => h && h.startsWith('http')),
+    offers: {
+      '@type': 'EducationalOccupationalProgram',
+      name: 'Career Training Programs',
+      description: 'HR, Business Analyst, Finance & Accounts training with placement support',
+      provider: {
+        '@type': 'EducationalOrganization',
+        name: 'Incube Careers'
+      }
+    }
   }
 
   return (
