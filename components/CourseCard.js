@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from 'next/link'
-import { GraduationCap, Sparkles, Tag, ArrowRight, CheckCircle2 } from 'lucide-react'
+import { GraduationCap, Sparkles, Tag, ArrowRight } from 'lucide-react'
 
 export default function CourseCard({ course: c }) {
   const price = c.discountPrice > 0 ? c.discountPrice : c.originalPrice
@@ -9,8 +9,6 @@ export default function CourseCard({ course: c }) {
     ? Math.round(((c.originalPrice - c.discountPrice) / c.originalPrice) * 100)
     : 0
   const isFree = !c.originalPrice && !c.discountPrice
-
-  const learningPoints = c.whatYouLearn || []
 
   return (
     <div className="group relative flex flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
@@ -25,7 +23,7 @@ export default function CourseCard({ course: c }) {
         </div>
       )}
 
-      {/* Thumbnail with proper aspect ratio */}
+      {/* Thumbnail */}
       <Link href={`/courses/${c.slug}`} className="relative block aspect-video w-full overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
         <span
           className="absolute left-0 top-4 z-10 inline-flex items-center gap-1.5 rounded-r-lg py-1.5 pl-3 pr-4 text-xs font-bold uppercase tracking-wide text-white shadow-xl backdrop-blur-sm"
@@ -35,7 +33,6 @@ export default function CourseCard({ course: c }) {
           {c.badgeLabel || 'Online'}
         </span>
         
-        {/* Dark gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
         
         {c.thumbnail ? (
@@ -55,43 +52,42 @@ export default function CourseCard({ course: c }) {
 
       {/* Card Body */}
       <div className="relative flex flex-1 flex-col p-3">
-        {/* Title and Language */}
-        <div className="flex items-start justify-between gap-2">
-          <Link href={`/courses/${c.slug}`} className="flex-1">
-            <h3 className="font-heading text-sm font-bold leading-tight text-gray-900 transition-colors group-hover:text-orange-600 line-clamp-1">
-              {c.title}
-            </h3>
-          </Link>
+        {/* Title */}
+        <Link href={`/courses/${c.slug}`}>
+          <h3 className="font-heading text-sm font-bold leading-tight text-gray-900 transition-colors group-hover:text-orange-600 line-clamp-1">
+            {c.title}
+          </h3>
+        </Link>
+
+        {/* Language and Category badges */}
+        <div className="mt-2 flex flex-wrap items-center gap-1">
           {c.language && (
-            <span className="shrink-0 rounded-lg bg-orange-500 px-2 py-0.5 text-[10px] font-bold text-white shadow-md">
+            <span className="inline-flex items-center rounded bg-blue-500 px-2 py-0.5 text-[10px] font-bold text-white">
               {c.language}
+            </span>
+          )}
+          
+          {c.categoryNames && c.categoryNames.length > 0 && c.categoryNames.slice(0, 3).map((catName, idx) => (
+            <span
+              key={idx}
+              className="inline-flex items-center gap-0.5 rounded bg-orange-500 px-2 py-0.5 text-[10px] font-bold text-white"
+            >
+              <Tag className="h-2.5 w-2.5 text-white" />
+              {catName}
+            </span>
+          ))}
+          
+          {c.category && !c.categoryNames && (
+            <span className="inline-flex items-center gap-0.5 rounded bg-orange-500 px-2 py-0.5 text-[10px] font-bold text-white">
+              <Tag className="h-2.5 w-2.5 text-white" />
+              {c.category}
             </span>
           )}
         </div>
 
-        {/* Category badges - multiple streams */}
-        {c.categoryNames && c.categoryNames.length > 0 ? (
-          <div className="mt-2 flex flex-wrap gap-1">
-            {c.categoryNames.slice(0, 3).map((catName, idx) => (
-              <span
-                key={idx}
-                className="inline-flex items-center gap-0.5 rounded bg-orange-500 px-2 py-0.5 text-[10px] font-bold text-white"
-              >
-                <Tag className="h-2.5 w-2.5 text-white" />
-                {catName}
-              </span>
-            ))}
-          </div>
-        ) : c.category ? (
-          <span className="mt-2 inline-flex w-fit items-center gap-0.5 rounded bg-orange-500 px-2 py-0.5 text-[10px] font-bold text-white">
-            <Tag className="h-2.5 w-2.5 text-white" />
-            {c.category}
-          </span>
-        ) : null}
-
         <div className="mt-2 flex-1" />
 
-        {/* Price - Compact */}
+        {/* Price */}
         <div className="mt-2">
           <div className="mb-2">
             {isFree ? (
