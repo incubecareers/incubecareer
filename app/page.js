@@ -37,7 +37,7 @@ async function getFeaturedCourses(featuredIds = []) {
         _id: { $in: featuredIds },
         status: 'published' 
       })
-        .select('title slug description thumbnail category')
+        .select('title slug description thumbnail category whatYouLearn')
         .lean()
       
       // Maintain the order specified by admin
@@ -49,7 +49,7 @@ async function getFeaturedCourses(featuredIds = []) {
     
     // Fallback: fetch latest 4 published courses
     const courses = await Course.find({ status: 'published' })
-      .select('title slug description thumbnail category')
+      .select('title slug description thumbnail category whatYouLearn')
       .sort({ createdAt: -1 })
       .limit(4)
       .lean()
