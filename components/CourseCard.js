@@ -57,12 +57,25 @@ export default function CourseCard({ course: c }) {
             </span>
           )}
         </div>
-        {c.category && (
+        {/* Display all selected categories/streams */}
+        {c.categoryNames && c.categoryNames.length > 0 ? (
+          <div className="mt-2 flex flex-wrap gap-1.5">
+            {c.categoryNames.map((catName, idx) => (
+              <span
+                key={idx}
+                className="inline-flex items-center gap-1 rounded-full bg-brand-accentLight px-2.5 py-1 text-xs font-semibold text-brand-accentDark"
+              >
+                <Tag className="h-3 w-3" />
+                {catName}
+              </span>
+            ))}
+          </div>
+        ) : c.category ? (
           <span className="mt-2 inline-flex w-fit items-center gap-1 rounded-full bg-brand-accentLight px-2.5 py-1 text-xs font-semibold text-brand-accentDark">
             <Tag className="h-3 w-3" />
             {c.category}
           </span>
-        )}
+        ) : null}
 
         {/* Meta rows */}
         <div className="mt-3 space-y-1.5 text-sm text-brand-textSecondary">

@@ -48,6 +48,15 @@ export default async function CoursesCatalog() {
     courses = serialize(courseDocs)
     categories = serialize(categoryDocs)
     s = mergeSiteSettings(settingDoc ? serialize(settingDoc) : SITE_DEFAULTS)
+    
+    // Enrich courses with category names array for display
+    const categoryMap = new Map(categories.map(cat => [cat._id, cat.name]))
+    courses = courses.map(course => ({
+      ...course,
+      categoryNames: (course.categoryIds || [])
+        .map(id => categoryMap.get(id))
+        .filter(Boolean)
+    }))
   }
 
   const courseSchema = {
