@@ -55,20 +55,8 @@ async function getUserEnrollments(userId) {
 }
 
 export default async function MyLearningPage() {
-  const currentUser = await getCurrentUser()
-  
-  if (!currentUser) {
-    redirect('/login?callbackUrl=/learn')
-  }
-
-  if (currentUser.role === 'student' && !currentUser.profileCompleted) {
-    redirect('/complete-profile?callbackUrl=/learn')
-  }
-
-  const [enrollments, s] = await Promise.all([
-    getUserEnrollments(currentUser._id),
-    getSettings(),
-  ])
+  // Redirect to dashboard
+  redirect('/dashboard')
 
   return (
     <div className="flex min-h-screen flex-col bg-brand-surface">
