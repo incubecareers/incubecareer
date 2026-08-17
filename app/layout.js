@@ -56,7 +56,7 @@ export const metadata = {
       'Live learning with industry experts. Jobs at technology companies.',
     images: [
       {
-        url: '/logo.png',
+        url: '/logo-full.png',
         width: 1200,
         height: 630,
         alt: 'Incube Careers',
@@ -68,7 +68,7 @@ export const metadata = {
     title: 'Incube Careers - Accelerate your career',
     description:
       'Live learning with industry experts. Jobs at technology companies.',
-    images: ['/logo.png'],
+    images: ['/logo-full.png'],
   },
   robots: {
     index: true,
@@ -83,9 +83,9 @@ export const metadata = {
   },
   manifest: '/manifest.json',
   icons: {
-    icon: '/favicon.png',
-    shortcut: '/favicon.png',
-    apple: '/favicon.png',
+    icon: '/favicon.svg',
+    shortcut: '/favicon.svg',
+    apple: '/favicon.svg',
   },
   other: {
     'theme-color': '#FE5529',
