@@ -92,8 +92,8 @@ export default function CourseCard({ course: c }) {
         <div className="mt-2 flex-1" />
 
         {/* Price - Compact */}
-        <div className="mt-2 flex items-center justify-between">
-          <div>
+        <div className="mt-2">
+          <div className="mb-2">
             {isFree ? (
               <span className="font-heading text-lg font-bold text-green-600">Free</span>
             ) : (
@@ -109,16 +109,30 @@ export default function CourseCard({ course: c }) {
               </div>
             )}
           </div>
-          <Link
-            href={`/courses/${c.slug}`}
-            className="flex items-center justify-center gap-1 rounded-lg px-3 py-2 text-xs font-bold text-white"
-            style={{ 
-              background: `linear-gradient(135deg, ${c.buyNowButtonColor || '#FE5529'} 0%, ${c.buyNowButtonColor || '#E04820'} 100%)`
-            }}
-          >
-            Enroll
-            <ArrowRight className="h-3 w-3" />
-          </Link>
+          
+          {/* Action buttons */}
+          <div className="grid grid-cols-2 gap-2">
+            <Link
+              href={`/courses/${c.slug}`}
+              className="flex items-center justify-center gap-1 rounded-lg border-2 px-3 py-2 text-xs font-bold"
+              style={{
+                borderColor: c.exploreButtonColor || '#FE5529',
+                color: c.exploreButtonColor || '#FE5529',
+              }}
+            >
+              Explore
+            </Link>
+            <Link
+              href={`/courses/${c.slug}`}
+              className="flex items-center justify-center gap-1 rounded-lg px-3 py-2 text-xs font-bold text-white"
+              style={{ 
+                background: `linear-gradient(135deg, ${c.buyNowButtonColor || '#FE5529'} 0%, ${c.buyNowButtonColor || '#E04820'} 100%)`
+              }}
+            >
+              Enroll
+              <ArrowRight className="h-3 w-3" />
+            </Link>
+          </div>
         </div>
       </div>
     </div>
