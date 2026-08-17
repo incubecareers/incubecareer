@@ -52,10 +52,30 @@ export async function PUT(req, { params }) {
   const body = await req.json()
   const update = pickCourse(body)
 
-  // Category can be edited later, but only to a valid, active category. If a
-  // categoryId is supplied it must resolve; the denormalized name is set from
-  // the authoritative record. If omitted, the existing category is preserved.
-  if (body.categoryId !== undefined) {
+  // Handle multiple categories (categoryIds array)
+  if (body.categoryIds !== undefined && Array.isArray(body.categoryIds)) {
+    // Validate all category IDs
+    const validCategories = []
+    for (const catId of body.categoryIds) {
+      try {
+        const cat = await Category.findOne({ _id: catId, active: true }).lean()
+        if (cat) validCategories.push(cat)
+      } catch {
+        // Skip invalid IDs
+      }
+    }
+    
+    if (validCategories.length === 0) {
+      return NextResponse.json({ error: 'At least one valid category is required' }, { status: 400 })
+    }
+    
+    update.categoryIds = validCategories.map(c => c._id)
+    // Set primary category to first selected
+    update.categoryId = validCategories[0]._id
+    update.category = validCategories[0].name
+  }
+  // Single category (legacy support)
+  else if (body.categoryId !== undefined) {
     let category = null
     try {
       category = await Category.findOne({ _id: body.categoryId, active: true }).lean()
@@ -67,6 +87,8 @@ export async function PUT(req, { params }) {
     }
     update.categoryId = category._id
     update.category = category.name
+    // Also set categoryIds for consistency
+    update.categoryIds = [category._id]
   }
 
   const updated = await Course.findByIdAndUpdate(

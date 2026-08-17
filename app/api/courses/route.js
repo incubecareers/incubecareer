@@ -63,10 +63,31 @@ export async function POST(req) {
     }
   }
 
-  // Category is mandatory on creation and must be a real, active category.
-  const category = await resolveCategory(body.categoryId)
-  if (!category) {
-    return NextResponse.json({ error: 'A valid category is required' }, { status: 400 })
+  // Handle multiple categories (categoryIds array) or single category
+  let primaryCategory = null
+  let categoryIds = []
+  
+  if (body.categoryIds && Array.isArray(body.categoryIds) && body.categoryIds.length > 0) {
+    // Validate all category IDs
+    const validCategories = []
+    for (const catId of body.categoryIds) {
+      const cat = await resolveCategory(catId)
+      if (cat) validCategories.push(cat)
+    }
+    
+    if (validCategories.length === 0) {
+      return NextResponse.json({ error: 'At least one valid category is required' }, { status: 400 })
+    }
+    
+    primaryCategory = validCategories[0]
+    categoryIds = validCategories.map(c => c._id)
+  } else {
+    // Single category (legacy support or primary only)
+    primaryCategory = await resolveCategory(body.categoryId)
+    if (!primaryCategory) {
+      return NextResponse.json({ error: 'A valid category is required' }, { status: 400 })
+    }
+    categoryIds = [primaryCategory._id]
   }
 
   // Build a unique slug from the title.
@@ -81,8 +102,9 @@ export async function POST(req) {
   // the client-sent name).
   const course = await Course.create({
     ...pickCourse(body),
-    categoryId: category._id,
-    category: category.name,
+    categoryId: primaryCategory._id,
+    categoryIds: categoryIds,
+    category: primaryCategory.name,
     slug,
   })
   return NextResponse.json(serialize(course.toObject()), { status: 201 })

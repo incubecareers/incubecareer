@@ -39,6 +39,7 @@ const COURSE_FIELDS = [
   'thumbnail',
   'previewVideo',
   'categoryId',
+  'categoryIds',
   'category',
   'examTarget',
   'language',
