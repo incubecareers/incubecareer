@@ -52,13 +52,13 @@ export async function generateMetadata({ params }) {
       description,
       type: 'article',
       url: `https://www.incubecareers.com/courses/${courseDoc.slug}`,
-      images: [courseDoc.thumbnail ? courseDoc.thumbnail : '/logo-full.png'],
+      images: [courseDoc.thumbnail ? courseDoc.thumbnail : '/logo.png'],
     },
     twitter: {
       card: 'summary_large_image',
       title: courseDoc.title,
       description,
-      images: [courseDoc.thumbnail ? courseDoc.thumbnail : '/logo-full.png'],
+      images: [courseDoc.thumbnail ? courseDoc.thumbnail : '/logo.png'],
     },
   }
 }
@@ -124,7 +124,7 @@ export default async function CourseDetail({ params }) {
       <header className="sticky top-0 z-20 border-b border-brand-border bg-brand-primary/80 backdrop-blur-md">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3.5 sm:px-6">
           <Link href="/courses">
-            <img src="/logo-full.png" alt="Incube Careers" style={{ width: '200px', height: 'auto' }} />
+            <img src="/logo.png" alt="Incube Careers" style={{ width: '200px', height: 'auto' }} />
           </Link>
           <SignInCta
             label="Sign in"

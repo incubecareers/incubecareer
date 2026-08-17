@@ -40,7 +40,7 @@ export default function BrandPreview() {
         <div className="grid gap-6 sm:grid-cols-2">
           <div className="flex flex-col items-center gap-4 rounded-xl border border-brand-border bg-brand-primary p-8">
             <img
-              src="/logo-full.png"
+              src="/logo.png"
               alt="Incube Careers full logo"
               className="h-16 w-auto"
             />

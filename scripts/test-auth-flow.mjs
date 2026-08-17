@@ -67,7 +67,7 @@ async function testAuthFlow() {
 
     // Step 3: Simulate user creation via /api/otp/verify (using findOneAndUpdate with upsert)
     console.log('Step 3️⃣ : Simulate OTP verification - create user with findOneAndUpdate + upsert')
-    const safeEmail = `${TEST_PHONE}@phone.dailytutors.local`
+    const safeEmail = `${TEST_PHONE}@phone.incubecareers.local`
     
     const createdUser = await User.findOneAndUpdate(
       { phone: TEST_PHONE },

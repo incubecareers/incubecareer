@@ -59,7 +59,7 @@ export default function SiteNavbar({ links = DEFAULT_LINKS }) {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between gap-3 py-4">
           <Link href="/" className="shrink-0" aria-label="Incube Careers home">
-            <img src="/logo-full.png" alt="Incube Careers" className="h-12 w-auto sm:h-14" />
+            <img src="/logo.png" alt="Incube Careers" className="h-12 w-auto sm:h-14" />
           </Link>
 
           {/* Desktop nav */}

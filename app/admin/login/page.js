@@ -45,7 +45,7 @@ export default function AdminLoginPage() {
     <div className="flex min-h-screen items-center justify-center bg-brand-accentLight/20 px-4">
       <div className="w-full max-w-sm rounded-2xl border border-brand-border bg-brand-primary p-8 shadow-sm">
         <Link href="/" className="flex justify-center">
-          <img src="/logo-full.png" alt="Incube Careers" style={{ width: '200px', height: 'auto' }} />
+          <img src="/logo.png" alt="Incube Careers" style={{ width: '200px', height: 'auto' }} />
         </Link>
         <h1 className="mt-6 text-center font-heading text-xl font-bold text-brand-textPrimary">
           Admin Login

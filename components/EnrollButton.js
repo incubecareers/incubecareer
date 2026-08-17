@@ -85,7 +85,7 @@ export default function EnrollButton({ courseId, enrolled, className = '', price
         order_id: orderData.order_id,
         name: 'Incube Careers',
         description: `Purchase ${courseTitle || 'this course'}`,
-        image: `${window.location.origin}/logo-full.png`,
+        image: `${window.location.origin}/logo.png`,
         handler: async function (response) {
           try {
             const verifyRes = await fetch('/api/verify-payment', {

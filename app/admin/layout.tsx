@@ -31,7 +31,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
       <aside className="border-b border-brand-border bg-brand-primary lg:sticky lg:top-0 lg:flex lg:h-screen lg:w-64 lg:shrink-0 lg:flex-col lg:border-b-0 lg:border-r">
         <div className="flex items-center justify-between gap-3 px-4 py-4">
           <Link href="/admin" className="flex items-center gap-2.5">
-            <img src="/logo-full.png" alt="Incube Careers" style={{ width: '200px', height: 'auto' }} />
+            <img src="/logo.png" alt="Incube Careers" style={{ width: '200px', height: 'auto' }} />
             <span className="rounded-full bg-brand-accentLight px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-brand-accentDark">
               {role === 'admin' ? 'Admin' : 'Co-Admin'}
             </span>

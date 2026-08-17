@@ -26,7 +26,7 @@ export default async function DashboardLayout({ children }) {
           <div className="flex items-center justify-between gap-4">
             <Link href="/dashboard">
               <img
-                src="/logo-full.png"
+                src="/logo.png"
                 alt="Incube Careers"
                 style={{ width: '200px', height: 'auto' }}
               />

@@ -1,4 +1,23 @@
+# Incube Careers - Non-IT Training & Placement (Bangalore)
+# HR, Business Analyst, Finance, Accounts courses with placement assistance
+
 User-agent: *
 Allow: /
 
+# Block admin, dashboard, and internal pages from search engines
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /learn/
+Disallow: /api/
+Disallow: /brand-preview/
+Disallow: /complete-profile/
+Disallow: /login
+
+# Allow course pages and static content
+Allow: /courses/
+Allow: /about
+Allow: /contact
+Allow: /pricing
+
+# Sitemap location
 Sitemap: https://www.incubecareers.com/sitemap.xml

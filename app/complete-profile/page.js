@@ -87,7 +87,7 @@ function CompleteProfileForm() {
     <div className="flex min-h-screen items-center justify-center bg-brand-surface px-5 py-10 sm:px-8">
       <div className="w-full max-w-md animate-fade-up">
         <Link href="/" className="mb-8 flex justify-center">
-          <img src="/logo-full.png" alt="Incube Careers" style={{ width: '200px', height: 'auto' }} />
+          <img src="/logo.png" alt="Incube Careers" style={{ width: '200px', height: 'auto' }} />
         </Link>
 
         <div className="rounded-2xl border border-brand-border bg-brand-primary p-7 shadow-card sm:p-9">

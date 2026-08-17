@@ -73,7 +73,7 @@ export default async function Home() {
     '@type': 'EducationalOrganization',
     name: 'Incube Careers',
     url: 'https://www.incubecareers.com',
-    logo: 'https://www.incubecareers.com/logo-full.png',
+    logo: 'https://www.incubecareers.com/logo.png',
     description: 'Live learning with industry experts. Jobs at technology companies.',
     sameAs: (s.socialLinks || []).map((x) => x.href).filter((h) => h && h.startsWith('http')),
   }
