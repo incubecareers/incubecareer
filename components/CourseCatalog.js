@@ -63,12 +63,12 @@ export default function CourseCatalog({ courses = [], categories = [] }) {
             <>
               {/* Backdrop to close dropdown */}
               <div
-                className="fixed inset-0 z-10"
+                className="fixed inset-0 z-30"
                 onClick={() => setDropdownOpen(false)}
               />
               
               {/* Dropdown menu */}
-              <div className="absolute left-0 top-full z-20 mt-2 w-full min-w-[240px] max-w-md rounded-xl border border-brand-border bg-white shadow-lg overflow-hidden">
+              <div className="absolute left-0 top-full z-40 mt-2 w-full min-w-[240px] max-w-md rounded-xl border border-brand-border bg-white shadow-lg overflow-hidden">
                 <div className="max-h-[400px] overflow-y-auto">
                   <button
                     type="button"
