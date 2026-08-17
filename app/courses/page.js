@@ -80,7 +80,7 @@ export default async function CoursesCatalog() {
       {/* Header */}
       <section className="relative overflow-hidden border-b border-brand-border bg-hero-mesh">
         <div className="pointer-events-none absolute -right-24 -top-20 h-64 w-64 rounded-full bg-brand-accentLight/60 blur-3xl" />
-        <div className="relative mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:px-8 sm:py-20">
+        <div className="relative mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-8 sm:py-8">
           {s.coursesBadge ? (
             <span className="inline-flex items-center gap-2 rounded-full border border-brand-border bg-white/70 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-[0.24em] text-brand-accentDark backdrop-blur">
               <Sparkles className="h-3.5 w-3.5" />
@@ -96,7 +96,7 @@ export default async function CoursesCatalog() {
         </div>
       </section>
 
-      <div className="mx-auto w-full max-w-6xl flex-1 px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-6xl flex-1 px-4 py-6 sm:px-6 lg:px-8">
         <CourseCatalog courses={courses} categories={categories} />
       </div>
 
