@@ -63,7 +63,7 @@ export default function CourseCard({ course: c }) {
             </h3>
           </Link>
           {c.language && (
-            <span className="shrink-0 rounded-lg bg-blue-100 px-2.5 py-1 text-xs font-semibold text-blue-700">
+            <span className="shrink-0 rounded-lg bg-orange-500 px-2.5 py-1 text-xs font-bold text-white shadow-md">
               {c.language}
             </span>
           )}
