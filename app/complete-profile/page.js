@@ -13,7 +13,7 @@ function getSafeCallback(value) {
 // A phone-OTP account starts with a synthetic email and its name defaulted to
 // the phone number — treat both as "not filled in yet" so the form is blank.
 function isPlaceholderEmail(email) {
-  return !email || email.endsWith('@phone.dailytutors.local')
+  return !email || email.endsWith('@phone.incubecareers.local')
 }
 function isPlaceholderName(name) {
   return !name || /^\+?\d[\d\s-]*$/.test(name)

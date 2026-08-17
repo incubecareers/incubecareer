@@ -43,7 +43,7 @@ export async function POST(req) {
     }
 
     await dbConnect()
-    const safeEmail = `${phone}@phone.dailytutors.local`
+    const safeEmail = `${phone}@phone.incubecareers.local`
 
     // Use findOneAndUpdate with upsert to ensure atomicity: if user doesn't exist
     // by phone, create them; return the actual persisted user document.

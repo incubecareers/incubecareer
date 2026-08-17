@@ -97,7 +97,7 @@ const SiteSettingSchema = new mongoose.Schema(
     footerAbout: { type: String, default: '' },
     footerColumns: { type: [FooterColumnSchema], default: [] },
     socialLinks: { type: [SocialLinkSchema], default: [] },
-    footerText: { type: String, default: '© 2026 Daily Tutors. All rights reserved.' },
+    footerText: { type: String, default: '© 2026 Incube Careers. All rights reserved.' },
 
     // Featured course IDs shown on the homepage career programs section
     featuredCourseIds: { type: [String], default: [] },
