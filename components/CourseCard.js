@@ -75,16 +75,16 @@ export default function CourseCard({ course: c }) {
             {c.categoryNames.map((catName, idx) => (
               <span
                 key={idx}
-                className="inline-flex items-center gap-1 rounded-lg bg-gradient-to-r from-orange-50 to-red-50 px-2.5 py-1 text-xs font-semibold text-orange-700 shadow-sm"
+                className="inline-flex items-center gap-1 rounded-lg bg-orange-100 border border-orange-300 px-3 py-1.5 text-xs font-bold text-orange-900 shadow-sm"
               >
-                <Tag className="h-3 w-3" />
+                <Tag className="h-3.5 w-3.5 text-orange-700" />
                 {catName}
               </span>
             ))}
           </div>
         ) : c.category ? (
-          <span className="mt-3 inline-flex w-fit items-center gap-1 rounded-lg bg-gradient-to-r from-orange-50 to-red-50 px-2.5 py-1 text-xs font-semibold text-orange-700 shadow-sm">
-            <Tag className="h-3 w-3" />
+          <span className="mt-3 inline-flex w-fit items-center gap-1 rounded-lg bg-orange-100 border border-orange-300 px-3 py-1.5 text-xs font-bold text-orange-900 shadow-sm">
+            <Tag className="h-3.5 w-3.5 text-orange-700" />
             {c.category}
           </span>
         ) : null}
