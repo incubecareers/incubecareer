@@ -11,7 +11,7 @@ import Course from '@/models/Course'
 import { serialize } from '@/lib/utils'
 import { getCurrentUser } from '@/lib/session'
 
-export const revalidate = 300
+export const revalidate = 3600 // Cache for 1 hour instead of 5 minutes
 
 async function getSettings() {
   if (!process.env.MONGODB_URI) {
