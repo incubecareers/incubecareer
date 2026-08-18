@@ -19,6 +19,7 @@ export default function SignInCta({
   authedLabel = 'Go to dashboard',
   className = '',
   withIcon = false,
+  redirectTo = '/dashboard',
 }) {
   // Hooks must run unconditionally and in the same order on every render, so
   // useAuthStatus() is called before any early return.
@@ -27,7 +28,7 @@ export default function SignInCta({
   // Dev mode: skip Google login, go straight into the app.
   if (process.env.NEXT_PUBLIC_DISABLE_AUTH === 'true') {
     return (
-      <Link href="/dashboard" className={className}>
+      <Link href={redirectTo} className={className}>
         {authedLabel}
       </Link>
     )
@@ -40,14 +41,14 @@ export default function SignInCta({
 
   if (authenticated) {
     return (
-      <Link href="/dashboard" className={className}>
+      <Link href={redirectTo} className={className}>
         {authedLabel}
       </Link>
     )
   }
 
   return (
-    <Link href="/login" className={className}>
+    <Link href={`/login?callbackUrl=${encodeURIComponent(redirectTo)}`} className={className}>
       {withIcon && <GoogleIcon />}
       {label}
     </Link>

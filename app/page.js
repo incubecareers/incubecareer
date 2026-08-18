@@ -132,16 +132,16 @@ export default async function Home() {
               <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
                 <SignInCta
                   label="Start learning free"
-                  authedLabel="Go to dashboard"
+                  authedLabel="Browse courses"
+                  redirectTo="/courses"
                   className="group inline-flex items-center justify-center gap-2 rounded-xl bg-brand-accent px-8 py-4 text-lg font-bold text-white shadow-lg shadow-brand-accent/30 transition-all hover:scale-105 hover:shadow-xl hover:shadow-brand-accent/50"
                 />
-                <a
-                  href="#features"
+                <SignInCta
+                  label="Explore courses"
+                  authedLabel="Browse courses"
+                  redirectTo="/courses"
                   className="inline-flex items-center justify-center gap-2 rounded-xl border border-brand-dark-border bg-brand-dark-surface/50 px-8 py-4 text-lg font-bold text-brand-dark-text backdrop-blur-sm transition-all hover:bg-brand-dark-surface"
-                >
-                  Explore courses
-                  <ArrowRight className="h-5 w-5" />
-                </a>
+                />
               </div>
 
               {/* Social Proof */}
