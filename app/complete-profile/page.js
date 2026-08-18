@@ -71,7 +71,7 @@ function CompleteProfileForm() {
       })
       const data = await res.json()
       if (res.ok && data.ok) {
-        router.replace(callbackUrl)
+        window.location.href = callbackUrl
       } else {
         setError(data.error || 'Could not save your details. Please try again.')
         setSaving(false)
