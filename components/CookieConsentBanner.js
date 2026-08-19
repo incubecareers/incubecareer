@@ -29,31 +29,31 @@ export default function CookieConsentBanner() {
         role="dialog"
         aria-modal="true"
         aria-label="Cookie consent"
-        className="relative w-full max-w-sm animate-scale-in rounded-2xl border border-brand-border bg-white p-5 text-center shadow-cardHover"
+        className="relative w-full max-w-sm animate-scale-in rounded-2xl border border-white/20 bg-white/10 backdrop-blur-xl p-5 text-center shadow-2xl"
       >
-        <p className="font-heading text-base font-semibold text-brand-textPrimary">We use cookies</p>
-        <p className="mx-auto mt-1.5 max-w-xs text-sm leading-6 text-brand-textSecondary">
+        <p className="font-heading text-base font-semibold text-white">We use cookies</p>
+        <p className="mx-auto mt-1.5 max-w-xs text-sm leading-6 text-white/80">
           We use cookies to keep the platform secure and personalize your learning. You can change your choice anytime.
         </p>
         <div className="mt-4 flex flex-col gap-2.5 sm:flex-row sm:justify-center">
           <button
             type="button"
             onClick={() => handleChoice('reject')}
-            className="w-full rounded-full border border-brand-border px-4 py-2 text-sm font-semibold text-brand-textSecondary transition hover:border-brand-accent hover:text-brand-accent sm:w-auto"
+            className="w-full rounded-full border border-white/30 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:border-white/50 hover:bg-white/10 sm:w-auto"
           >
             Reject
           </button>
           <button
             type="button"
             onClick={() => handleChoice('accept')}
-            className="w-full rounded-full bg-brand-accent px-4 py-2 text-sm font-semibold text-white transition hover:bg-brand-accentDark sm:w-auto"
+            className="w-full rounded-full bg-brand-accent px-4 py-2 text-sm font-semibold text-white transition hover:bg-brand-accentDark sm:w-auto shadow-lg"
           >
             Accept
           </button>
         </div>
         <Link
           href="/cookie-policy"
-          className="mt-3 inline-block text-xs font-medium text-brand-textSecondary underline underline-offset-2 transition hover:text-brand-accent"
+          className="mt-3 inline-block text-xs font-medium text-white/70 underline underline-offset-2 transition hover:text-white"
         >
           Learn more
         </Link>
