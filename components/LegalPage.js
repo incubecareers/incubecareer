@@ -8,9 +8,9 @@ export default function LegalPage({ title, description, updated, breadcrumbs = [
       <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
         <Breadcrumbs items={breadcrumbs} />
 
-        <div className="mt-6 overflow-hidden rounded-[2rem] border border-brand-border bg-white shadow-card">
+        <div className="mt-6 overflow-hidden rounded-[2rem] border border-brand-border bg-[#1A1A1A] shadow-card">
           <div className="bg-hero-glow p-8 lg:p-10">
-            <div className="inline-flex items-center rounded-full border border-brand-border bg-white/90 px-3 py-1 text-sm font-medium text-brand-textSecondary shadow-sm">
+            <div className="inline-flex items-center rounded-full border border-brand-border bg-[#2A2A2A] px-3 py-1 text-sm font-medium text-brand-textSecondary shadow-sm">
               {badge}
             </div>
             <PageTitle className="mt-6">{title}</PageTitle>

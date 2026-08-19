@@ -14,7 +14,7 @@ export default function ContactPage() {
       <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
         <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Contact' }]} />
 
-        <div className="mt-6 overflow-hidden rounded-[2rem] border border-brand-border bg-white shadow-card">
+        <div className="mt-6 overflow-hidden rounded-[2rem] border border-brand-border bg-[#1A1A1A] shadow-card">
           <div className="bg-hero-glow p-8 lg:p-12">
             <PageTitle>Contact us</PageTitle>
             <SectionText className="mt-4 max-w-3xl">

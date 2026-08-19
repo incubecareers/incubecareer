@@ -45,12 +45,6 @@ input:focus, textarea:focus, select:focus {
   outline: none !important;
 }
 
-/* White backgrounds that have dark text — force to dark */
-.bg-white {
-  background-color: #1A1A1A !important;
-  color: #FFFFFF !important;
-}
-
 /* Brand surface cards */
 .bg-brand-surface {
   background-color: #141414 !important;
@@ -129,13 +123,6 @@ summary:focus-visible {
   .text-visible-secondary {
     color: #A0A0A0 !important;
   }
-}
-
-/* Force dark text on light backgrounds to be visible */
-.bg-white *,
-[class*="bg-gray"] *,
-[class*="bg-light"] * {
-  color: #FFFFFF !important;
 }
 
 /* Ensure links are visible */
