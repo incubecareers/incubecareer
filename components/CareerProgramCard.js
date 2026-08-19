@@ -22,7 +22,7 @@ export default function CareerProgramCard({ course, initialAuthenticated = false
 
   return (
     <div
-      className="flex flex-col overflow-hidden border border-gray-300 bg-white shadow cursor-pointer hover:shadow-md"
+      className="flex flex-col overflow-hidden border border-black bg-white shadow cursor-pointer hover:shadow-md"
       onClick={handleClick}
     >
       {/* Banner - Reduced height */}
