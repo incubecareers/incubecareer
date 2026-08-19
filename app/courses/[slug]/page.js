@@ -188,7 +188,7 @@ export default async function CourseDetail({ params }) {
           )}
 
           {course.whatYouLearn?.length > 0 && (
-            <section className="mt-8 rounded-2xl border border-brand-border bg-white p-6 shadow-card">
+            <section className="mt-8 rounded-2xl border border-brand-border bg-[#1A1A1A] p-6 shadow-card">
               <h2 className="font-heading text-xl font-bold text-brand-textPrimary">
                 What you&apos;ll learn
               </h2>
@@ -217,7 +217,7 @@ export default async function CourseDetail({ params }) {
               {sectionsWithLessons.map((s) => (
                 <div
                   key={s._id}
-                  className="overflow-hidden rounded-2xl border border-brand-border bg-white shadow-card"
+                  className="overflow-hidden rounded-2xl border border-brand-border bg-[#1A1A1A] shadow-card"
                 >
                   <div className="flex items-center gap-2 border-b border-brand-border bg-brand-surface px-4 py-3">
                     <Layers className="h-4 w-4 text-brand-accent" />
@@ -277,7 +277,7 @@ export default async function CourseDetail({ params }) {
                 {quizzes.map((q) => (
                   <li
                     key={q._id}
-                    className="flex items-center gap-2 rounded-xl border border-brand-border bg-white px-4 py-3 text-sm text-brand-textPrimary shadow-card"
+                    className="flex items-center gap-2 rounded-xl border border-brand-border bg-[#1A1A1A] px-4 py-3 text-sm text-brand-textPrimary shadow-card"
                   >
                     <FileText className="h-4 w-4 text-brand-accent" /> {q.title}
                     {q.timeLimit > 0 && (
@@ -294,7 +294,7 @@ export default async function CourseDetail({ params }) {
 
         {/* Sidebar / purchase card */}
         <aside className="lg:col-span-1">
-          <div className="sticky top-24 overflow-hidden rounded-2xl border border-brand-border bg-white shadow-cardHover">
+          <div className="sticky top-24 overflow-hidden rounded-2xl border border-brand-border bg-[#1A1A1A] shadow-cardHover">
             <div className="aspect-video w-full overflow-hidden bg-brand-accentLight/40">
               {course.thumbnail ? (
                 <img src={course.thumbnail} alt={course.title} className="h-full w-full object-cover" />
