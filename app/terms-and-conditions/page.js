@@ -20,7 +20,7 @@ const sections = [
   },
   {
     title: 'Payments',
-    body: 'All fees are payable in advance and must be made using the approved payment methods displayed on the website. Payments are processed securely through Razorpay.',
+    body: 'All fees are payable in advance and must be made using the approved payment methods displayed on the website. Payments are processed securely through our payment gateway provider.',
   },
   {
     title: 'Refunds',
@@ -52,7 +52,7 @@ const sections = [
   },
   {
     title: 'Contact',
-    body: 'If you have any questions regarding these Terms and Conditions, please contact us at incubecareers@gmail.com.',
+    body: 'If you have any questions regarding these Terms and Conditions, please contact us at incubecareers@gmail.com or call +91 90713 66466.',
   },
 ]
 

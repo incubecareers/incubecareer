@@ -43,6 +43,13 @@ function CompleteProfileForm() {
       })
       .then((data) => {
         if (!active || !data) return
+        
+        // If profile is already complete, redirect to callback URL
+        if (data.profileCompleted) {
+          window.location.href = callbackUrl
+          return
+        }
+        
         setIsGoogleUser(Boolean(data.googleId))
         setForm({
           name: isPlaceholderName(data.name) ? '' : data.name,

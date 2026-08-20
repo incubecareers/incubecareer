@@ -27,11 +27,16 @@ export async function POST(req) {
   if (!name) {
     return NextResponse.json({ error: 'Please enter your name.' }, { status: 400 })
   }
-  if (phone.length !== 10) {
+
+  // Build update object - only update phone if it's different from current
+  const update = { name, profileCompleted: true }
+  
+  // Only update phone if provided and different from current
+  if (phone.length === 10 && phone !== user.phone) {
+    update.phone = phone
+  } else if (!user.phone && phone.length !== 10) {
     return NextResponse.json({ error: 'Enter a valid 10-digit mobile number.' }, { status: 400 })
   }
-
-  const update = { name, phone, profileCompleted: true }
 
   // Only phone-OTP accounts set their email here. Google accounts are keyed on
   // the Google email, so changing it would break their session lookup.
@@ -44,8 +49,7 @@ export async function POST(req) {
   }
 
   try {
-    // For Google users, we're updating their OWN record, so duplicate email is fine
-    // (it's their own email). For phone users, check if email is taken by someone else.
+    // Check if email is taken by someone else (not their own record)
     if (!isGoogleUser) {
       const emailTaken = await User.findOne({ 
         email,
@@ -54,6 +58,20 @@ export async function POST(req) {
       if (emailTaken) {
         return NextResponse.json(
           { error: 'That email is already registered. Please use a different one or sign in with it.' },
+          { status: 409 }
+        )
+      }
+    }
+
+    // Only check phone duplication if we're actually updating it
+    if (update.phone) {
+      const phoneTaken = await User.findOne({
+        phone: update.phone,
+        _id: { $ne: user._id } // not their own record
+      })
+      if (phoneTaken) {
+        return NextResponse.json(
+          { error: 'That phone number is already registered. Please use a different one.' },
           { status: 409 }
         )
       }

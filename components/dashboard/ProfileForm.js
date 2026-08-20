@@ -48,7 +48,7 @@ export default function ProfileForm({ initialData }) {
   return (
     <form
       onSubmit={onSubmit}
-      className="space-y-5 rounded-2xl border border-brand-border bg-white p-6 shadow-card"
+      className="space-y-5 rounded-2xl border border-brand-border bg-brand-surface p-6 shadow-card"
     >
       <div className="flex items-center gap-2">
         <Settings2 className="h-5 w-5 text-brand-accent" />

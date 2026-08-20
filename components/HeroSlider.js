@@ -93,7 +93,7 @@ export default function HeroSlider({ banners = [] }) {
                       {banner.ctaText ? (
                         <Link
                           href={banner.ctaHref || '/'}
-                          className="group mt-4 inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 text-xs font-semibold text-brand-textPrimary shadow-lg shadow-black/10 transition-transform hover:-translate-y-0.5 sm:mt-7 sm:px-6 sm:py-3 sm:text-sm"
+                          className="group mt-4 inline-flex items-center gap-2 rounded-xl bg-brand-surface px-4 py-2.5 text-xs font-semibold text-brand-textPrimary shadow-lg shadow-black/10 transition-transform hover:-translate-y-0.5 sm:mt-7 sm:px-6 sm:py-3 sm:text-sm"
                         >
                           {banner.ctaText}
                           <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
@@ -113,7 +113,7 @@ export default function HeroSlider({ banners = [] }) {
             type="button"
             onClick={() => go(activeIndex - 1)}
             aria-label="Previous slide"
-            className="pointer-events-auto inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/85 text-brand-textPrimary shadow-lg shadow-black/10 backdrop-blur transition hover:scale-105 hover:bg-white sm:h-11 sm:w-11"
+            className="pointer-events-auto inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/85 text-brand-textPrimary shadow-lg shadow-black/10 backdrop-blur transition hover:scale-105 hover:bg-brand-surface sm:h-11 sm:w-11"
           >
             <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
           </button>
@@ -121,7 +121,7 @@ export default function HeroSlider({ banners = [] }) {
             type="button"
             onClick={() => go(activeIndex + 1)}
             aria-label="Next slide"
-            className="pointer-events-auto inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/85 text-brand-textPrimary shadow-lg shadow-black/10 backdrop-blur transition hover:scale-105 hover:bg-white sm:h-11 sm:w-11"
+            className="pointer-events-auto inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/85 text-brand-textPrimary shadow-lg shadow-black/10 backdrop-blur transition hover:scale-105 hover:bg-brand-surface sm:h-11 sm:w-11"
           >
             <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
           </button>
@@ -136,7 +136,7 @@ export default function HeroSlider({ banners = [] }) {
               onClick={() => go(index)}
               aria-label={`Go to slide ${index + 1}`}
               className={`h-2 rounded-full transition-all duration-300 ${
-                index === activeIndex ? 'w-6 bg-white sm:w-7' : 'w-2 bg-white/50 hover:bg-white/80'
+                index === activeIndex ? 'w-6 bg-brand-surface sm:w-7' : 'w-2 bg-white/50 hover:bg-white/80'
               }`}
             />
           ))}

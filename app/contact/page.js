@@ -29,7 +29,7 @@ export default function ContactPage() {
                 <CardDescription>For account, payment, or course access questions.</CardDescription>
               </CardHeader>
               <CardContent>
-                <SectionText>Reach us at <Link href="mailto:incubecareers@gmail.com" className="font-semibold text-brand-accent">incubecareers@gmail.com</Link> or call <Link href="tel:+918050108613" className="font-semibold text-brand-accent">+91 80501 08613</Link>.</SectionText>
+                <SectionText>Reach us at <Link href="mailto:incubecareers@gmail.com" className="font-semibold text-brand-accent">incubecareers@gmail.com</Link> or call <Link href="tel:+919071366466" className="font-semibold text-brand-accent">+91 90713 66466</Link>.</SectionText>
               </CardContent>
             </Card>
 

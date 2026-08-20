@@ -27,6 +27,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE_URL}/contact`, lastModified: today, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE_URL}/pricing`, lastModified: today, changeFrequency: 'weekly', priority: 0.8 },
     { url: `${BASE_URL}/exams`, lastModified: today, changeFrequency: 'weekly', priority: 0.6 },
+    { url: `${BASE_URL}/terms-and-conditions`, lastModified: today, changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${BASE_URL}/privacy-policy`, lastModified: today, changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${BASE_URL}/refund-policy`, lastModified: today, changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${BASE_URL}/shipping-policy`, lastModified: today, changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${BASE_URL}/cookie-policy`, lastModified: today, changeFrequency: 'monthly', priority: 0.5 },
   ]
 
   let courseRoutes: MetadataRoute.Sitemap = []

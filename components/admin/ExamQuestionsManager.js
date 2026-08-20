@@ -252,7 +252,7 @@ export default function ExamQuestionsManager({ initialSubjects, userId }) {
   return (
     <div className="space-y-6">
       {/* Filters */}
-      <div className="rounded-xl border border-brand-border bg-white p-6 shadow-card">
+      <div className="rounded-xl border border-brand-border bg-brand-surface p-6 shadow-card">
         <div className="grid gap-4 md:grid-cols-5">
           {/* Grade */}
           <div>
@@ -391,7 +391,7 @@ export default function ExamQuestionsManager({ initialSubjects, userId }) {
               setShowBulkForm(true)
               setBulkResults(null)
             }}
-            className="inline-flex items-center gap-2 rounded-xl border border-brand-border bg-white px-4 py-2.5 text-sm font-semibold text-brand-textPrimary hover:border-brand-accent"
+            className="inline-flex items-center gap-2 rounded-xl border border-brand-border bg-brand-surface px-4 py-2.5 text-sm font-semibold text-brand-textPrimary hover:border-brand-accent"
           >
             <Upload className="h-4 w-4" /> Bulk Upload
           </button>
@@ -407,7 +407,7 @@ export default function ExamQuestionsManager({ initialSubjects, userId }) {
       {/* Bulk Upload Modal */}
       {showBulkForm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-xl bg-white p-6 shadow-xl">
+          <div className="w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-xl bg-brand-surface p-6 shadow-xl">
             <h3 className="text-lg font-semibold text-brand-textPrimary mb-2">Bulk Upload Questions</h3>
             <p className="text-sm text-brand-textSecondary mb-4">
               All questions will be saved to: <strong>{selectedGrade?.name}</strong> → <strong>{selectedSubject?.name}</strong>
@@ -533,7 +533,7 @@ export default function ExamQuestionsManager({ initialSubjects, userId }) {
               </button>
               <button
                 onClick={() => { setShowBulkForm(false); setBulkQuestions(''); setBulkResults(null) }}
-                className="flex-1 rounded-lg border border-brand-border bg-white px-4 py-2 text-sm font-semibold text-brand-textPrimary"
+                className="flex-1 rounded-lg border border-brand-border bg-brand-surface px-4 py-2 text-sm font-semibold text-brand-textPrimary"
               >
                 Close
               </button>
@@ -548,7 +548,7 @@ export default function ExamQuestionsManager({ initialSubjects, userId }) {
           <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-brand-accent border-r-transparent"></div>
         </div>
       ) : questions.length === 0 ? (
-        <div className="rounded-xl border border-brand-border bg-white p-12 text-center shadow-card">
+        <div className="rounded-xl border border-brand-border bg-brand-surface p-12 text-center shadow-card">
           <p className="text-brand-textSecondary">
             {selectedGrade ? 'No questions found. Add your first question!' : 'Select a grade to view questions'}
           </p>
@@ -556,7 +556,7 @@ export default function ExamQuestionsManager({ initialSubjects, userId }) {
       ) : (
         <div className="space-y-4">
           {questions.map((q, index) => (
-            <div key={q._id} className="rounded-xl border border-brand-border bg-white p-6 shadow-card">
+            <div key={q._id} className="rounded-xl border border-brand-border bg-brand-surface p-6 shadow-card">
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
@@ -595,7 +595,7 @@ export default function ExamQuestionsManager({ initialSubjects, userId }) {
       {/* Add/Edit Form Modal */}
       {showForm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-xl bg-white p-6 shadow-xl">
+          <div className="w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-xl bg-brand-surface p-6 shadow-xl">
             <h3 className="text-lg font-semibold text-brand-textPrimary mb-4">
               {editingQuestion ? 'Edit Question' : 'Add Question'}
             </h3>
@@ -748,7 +748,7 @@ export default function ExamQuestionsManager({ initialSubjects, userId }) {
               </button>
               <button
                 onClick={() => setShowForm(false)}
-                className="flex-1 rounded-lg border border-brand-border bg-white px-4 py-2 text-sm font-semibold text-brand-textPrimary"
+                className="flex-1 rounded-lg border border-brand-border bg-brand-surface px-4 py-2 text-sm font-semibold text-brand-textPrimary"
               >
                 Cancel
               </button>

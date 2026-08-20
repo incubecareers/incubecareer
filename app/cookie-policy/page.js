@@ -28,7 +28,7 @@ const sections = [
   },
   {
     title: 'Third-party Cookies',
-    body: 'Some cookies may be placed by third-party services such as Razorpay, Google Analytics, Google OAuth, Cloudinary, and Vercel to support payments, authentication, analytics, and media delivery.',
+    body: 'Some cookies may be placed by third-party services to support payments, authentication, analytics, and media delivery according to their respective privacy policies.',
   },
 ]
 

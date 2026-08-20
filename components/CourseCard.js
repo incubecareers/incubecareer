@@ -11,7 +11,7 @@ export default function CourseCard({ course: c }) {
   const isFree = !c.originalPrice && !c.discountPrice
 
   return (
-    <div className="group relative flex flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
+    <div className="group relative flex flex-col overflow-hidden rounded-2xl border border-brand-border bg-brand-surface shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
       {/* Gradient overlay on hover */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-orange-500/5 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
       
@@ -29,7 +29,7 @@ export default function CourseCard({ course: c }) {
           className="absolute left-0 top-4 z-10 inline-flex items-center gap-1.5 rounded-r-lg py-1.5 pl-3 pr-4 text-xs font-bold uppercase tracking-wide text-white shadow-xl backdrop-blur-sm"
           style={{ backgroundColor: c.badgeColor || '#FE5529' }}
         >
-          <span className="h-2 w-2 animate-pulse rounded-full bg-white" />
+          <span className="h-2 w-2 animate-pulse rounded-full bg-brand-accent" />
           {c.badgeLabel || 'Online'}
         </span>
         

@@ -182,7 +182,7 @@ export default function CourseForm({ mode = 'create', initialData = null, course
           </Field>
           <div className="grid gap-5 sm:grid-cols-3">
             <Field label="Categories * (Select all that apply)">
-              <div className="rounded-lg border border-brand-border bg-white p-4 max-h-[300px] overflow-y-auto">
+              <div className="rounded-lg border border-brand-border bg-brand-surface p-4 max-h-[300px] overflow-y-auto">
                 {categories.length === 0 ? (
                   <p className="text-xs text-brand-accent">
                     No categories found. Run the category seed/migration script.
@@ -332,7 +332,7 @@ export default function CourseForm({ mode = 'create', initialData = null, course
             className="inline-flex items-center gap-1.5 rounded-r-md py-1 pl-3 pr-3.5 text-[11px] font-bold uppercase tracking-wide text-white"
             style={{ backgroundColor: form.badgeColor }}
           >
-            <span className="h-1.5 w-1.5 rounded-full bg-white" />
+            <span className="h-1.5 w-1.5 rounded-full bg-brand-surface" />
             {form.badgeLabel}
           </span>
         </div>

@@ -161,7 +161,7 @@ export default function ExamSubjectsManager({ initialSubjects }) {
       {/* Subject Form Modal */}
       {showSubjectForm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl">
+          <div className="w-full max-w-md rounded-xl bg-brand-surface p-6 shadow-xl">
             <h3 className="text-lg font-semibold text-brand-textPrimary">
               {editingSubject ? 'Edit Subject' : 'Add Subject'}
             </h3>
@@ -200,7 +200,7 @@ export default function ExamSubjectsManager({ initialSubjects }) {
               </button>
               <button
                 onClick={resetSubjectForm}
-                className="flex-1 rounded-lg border border-brand-border bg-white px-4 py-2 text-sm font-semibold text-brand-textPrimary hover:bg-gray-50"
+                className="flex-1 rounded-lg border border-brand-border bg-brand-surface px-4 py-2 text-sm font-semibold text-brand-textPrimary hover:bg-[#1A1A1A]"
               >
                 Cancel
               </button>
@@ -212,7 +212,7 @@ export default function ExamSubjectsManager({ initialSubjects }) {
       {/* Topic Form Modal */}
       {showTopicForm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl">
+          <div className="w-full max-w-md rounded-xl bg-brand-surface p-6 shadow-xl">
             <h3 className="text-lg font-semibold text-brand-textPrimary">
               {editingTopic ? 'Edit Topic' : 'Add Topic'}
             </h3>
@@ -251,7 +251,7 @@ export default function ExamSubjectsManager({ initialSubjects }) {
               </button>
               <button
                 onClick={resetTopicForm}
-                className="flex-1 rounded-lg border border-brand-border bg-white px-4 py-2 text-sm font-semibold text-brand-textPrimary hover:bg-gray-50"
+                className="flex-1 rounded-lg border border-brand-border bg-brand-surface px-4 py-2 text-sm font-semibold text-brand-textPrimary hover:bg-[#1A1A1A]"
               >
                 Cancel
               </button>
@@ -262,7 +262,7 @@ export default function ExamSubjectsManager({ initialSubjects }) {
 
       {/* Subjects List */}
       {subjects.length === 0 ? (
-        <div className="rounded-xl border border-brand-border bg-white p-12 text-center shadow-card">
+        <div className="rounded-xl border border-brand-border bg-brand-surface p-12 text-center shadow-card">
           <BookOpen className="mx-auto h-12 w-12 text-brand-textSecondary opacity-50" />
           <h3 className="mt-4 text-lg font-semibold text-brand-textPrimary">No subjects yet</h3>
           <p className="mt-1 text-sm text-brand-textSecondary">
@@ -272,7 +272,7 @@ export default function ExamSubjectsManager({ initialSubjects }) {
       ) : (
         <div className="space-y-3">
           {subjects.map((subject) => (
-            <div key={subject._id} className="rounded-xl border border-brand-border bg-white shadow-card">
+            <div key={subject._id} className="rounded-xl border border-brand-border bg-brand-surface shadow-card">
               {/* Subject Header */}
               <div className="flex items-center justify-between p-4">
                 <div className="flex items-center gap-3 flex-1">
@@ -317,7 +317,7 @@ export default function ExamSubjectsManager({ initialSubjects }) {
                     <h4 className="text-sm font-semibold text-brand-textPrimary">Topics</h4>
                     <button
                       onClick={() => setShowTopicForm(subject._id)}
-                      className="inline-flex items-center gap-1 rounded-lg border border-brand-border bg-white px-3 py-1.5 text-xs font-semibold text-brand-textPrimary hover:border-brand-accent"
+                      className="inline-flex items-center gap-1 rounded-lg border border-brand-border bg-brand-surface px-3 py-1.5 text-xs font-semibold text-brand-textPrimary hover:border-brand-accent"
                     >
                       <Plus className="h-3 w-3" />
                       Add Topic
@@ -331,7 +331,7 @@ export default function ExamSubjectsManager({ initialSubjects }) {
                       {topics[subject._id].map((topic) => (
                         <div
                           key={topic._id}
-                          className="flex items-center justify-between rounded-lg border border-brand-border bg-white p-3"
+                          className="flex items-center justify-between rounded-lg border border-brand-border bg-brand-surface p-3"
                         >
                           <div className="flex items-center gap-2 flex-1">
                             <FileText className="h-4 w-4 text-brand-textSecondary" />

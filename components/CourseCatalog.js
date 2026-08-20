@@ -50,7 +50,7 @@ export default function CourseCatalog({ courses = [], categories = [] }) {
           <button
             type="button"
             onClick={() => setDropdownOpen(!dropdownOpen)}
-            className="inline-flex items-center justify-between gap-3 rounded-xl border border-brand-border bg-white px-5 py-3 text-sm font-semibold text-brand-textPrimary shadow-sm transition hover:bg-brand-surface min-w-[240px]"
+            className="inline-flex items-center justify-between gap-3 rounded-xl border border-brand-border bg-brand-surface px-5 py-3 text-sm font-semibold text-brand-textPrimary shadow-sm transition hover:bg-[#1A1A1A] min-w-[240px]"
           >
             <span>
               {activeCategoryName}
@@ -68,7 +68,7 @@ export default function CourseCatalog({ courses = [], categories = [] }) {
               />
               
               {/* Dropdown menu */}
-              <div className="absolute left-0 top-full z-40 mt-2 w-full min-w-[240px] max-w-md rounded-xl border border-brand-border bg-white shadow-lg overflow-hidden">
+              <div className="absolute left-0 top-full z-40 mt-2 w-full min-w-[240px] max-w-md rounded-xl border border-brand-border bg-brand-surface shadow-lg overflow-hidden">
                 <div className="max-h-[400px] overflow-y-auto">
                   <button
                     type="button"
@@ -108,7 +108,7 @@ export default function CourseCatalog({ courses = [], categories = [] }) {
       )}
 
       {filtered.length === 0 ? (
-        <div className="flex flex-col items-center gap-4 rounded-3xl border border-dashed border-brand-border bg-white p-16 text-center">
+        <div className="flex flex-col items-center gap-4 rounded-3xl border border-dashed border-brand-border bg-brand-surface p-16 text-center">
           <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-accentLight text-brand-accent">
             <BookOpen className="h-7 w-7" />
           </span>

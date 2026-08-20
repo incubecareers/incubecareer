@@ -72,7 +72,7 @@ export default function ExamTestsManager({ initialSubjects, userId }) {
             className={`whitespace-nowrap rounded-lg px-4 py-2 text-sm font-semibold capitalize transition-colors ${
               filter === status
                 ? 'bg-accent-gradient text-white shadow-accent'
-                : 'border border-brand-border bg-white text-brand-textPrimary hover:border-brand-accent'
+                : 'border border-brand-border bg-brand-surface text-brand-textPrimary hover:border-brand-accent'
             }`}
           >
             {status}
@@ -98,7 +98,7 @@ export default function ExamTestsManager({ initialSubjects, userId }) {
           <p className="mt-2 text-sm text-brand-textSecondary">Loading tests...</p>
         </div>
       ) : tests.length === 0 ? (
-        <div className="rounded-xl border border-brand-border bg-white p-12 text-center shadow-card">
+        <div className="rounded-xl border border-brand-border bg-brand-surface p-12 text-center shadow-card">
           <p className="text-brand-textSecondary">
             No tests found. Create your first test!
           </p>
@@ -106,7 +106,7 @@ export default function ExamTestsManager({ initialSubjects, userId }) {
       ) : (
         <div className="grid gap-4">
           {tests.map((test) => (
-            <div key={test._id} className="rounded-xl border border-brand-border bg-white p-6 shadow-card">
+            <div key={test._id} className="rounded-xl border border-brand-border bg-brand-surface p-6 shadow-card">
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">

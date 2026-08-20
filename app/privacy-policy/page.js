@@ -17,7 +17,7 @@ const sections = [
   },
   {
     title: 'Payment Information',
-    body: 'Payments for course purchases are securely processed through Razorpay. We do not store your card details on our servers. Razorpay handles the payment transaction and security checks according to its own privacy and compliance practices.',
+    body: 'Payments for course purchases are securely processed through our payment gateway provider. We do not store your card details on our servers. Payment transactions and security are handled by our payment processor according to industry standards and compliance practices.',
   },
   {
     title: 'Device Information',
@@ -37,7 +37,7 @@ const sections = [
   },
   {
     title: 'Third-party Services',
-    body: 'Our platform may use trusted third-party services such as Razorpay for payments, Google Authentication for sign-in, Cloudinary for media storage, MongoDB for data storage, and Vercel for hosting and deployment. These providers are used only where necessary to deliver the experience you expect.',
+    body: 'Our platform may use trusted third-party services for payment processing, authentication, media hosting, data storage, and platform deployment. These providers are used only where necessary to deliver the experience you expect and operate according to their own privacy policies.',
   },
   {
     title: 'User Rights',
@@ -79,21 +79,10 @@ export default function PrivacyPolicyPage() {
           </section>
         ))}
 
-        <section>
-          <SectionTitle>Key Services We Use</SectionTitle>
-          <ul className="mt-4 space-y-2">
-            <ListItem>Razorpay for payment processing</ListItem>
-            <ListItem>Google Authentication for sign-in and account access</ListItem>
-            <ListItem>Cloudinary for media hosting and delivery</ListItem>
-            <ListItem>MongoDB for storing course and user account data</ListItem>
-            <ListItem>Vercel for secure hosting and deployment of the platform</ListItem>
-          </ul>
-        </section>
-
         <section className="rounded-2xl border border-brand-border bg-brand-surface p-6">
           <SectionTitle>Questions or concerns?</SectionTitle>
           <SectionText className="mt-3">
-            Contact our support team at <Link href="mailto:incubecareers@gmail.com" className="font-semibold text-brand-accent">incubecareers@gmail.com</Link>.
+            Contact our support team at <Link href="mailto:incubecareers@gmail.com" className="font-semibold text-brand-accent">incubecareers@gmail.com</Link> or call <Link href="tel:+919071366466" className="font-semibold text-brand-accent">+91 90713 66466</Link>.
           </SectionText>
         </section>
       </div>

@@ -5,27 +5,13 @@ import dbConnect from '@/lib/mongodb'
 import User from '@/models/User'
 import { verifyStudentToken, STUDENT_TOKEN_NAME } from '@/lib/studentJwt'
 
-const AUTH_DISABLED = process.env.NEXT_PUBLIC_DISABLE_AUTH === 'true'
+// SECURITY: Auth bypass removed. Never disable authentication in any environment.
 
 // Resolves the current user as a real MongoDB document (so queries that need a
-// real userId work). While auth is on hold for development, it find-or-creates
-// a stable local dev user so the dashboard has something to work with.
+// real userId work).
 export async function getCurrentUser() {
   if (!process.env.MONGODB_URI) return null
   await dbConnect()
-
-  if (AUTH_DISABLED) {
-    let user = await User.findOne({ email: 'dev@local' })
-    if (!user) {
-      user = await User.create({
-        googleId: 'dev-local',
-        email: 'dev@local',
-        name: 'Developer',
-        role: 'admin',
-      })
-    }
-    return user
-  }
 
   const session = await getServerSession(authOptions)
   if (session?.user?.email) {

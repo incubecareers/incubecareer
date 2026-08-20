@@ -132,7 +132,7 @@ export default function TestTakingInterface({ test, questions, attempt, userId }
     return (
       <div className="min-h-screen bg-gray-50 py-6">
         <div className="container mx-auto px-4 max-w-4xl">
-          <div className="rounded-xl border border-brand-border bg-white p-6 shadow-card">
+          <div className="rounded-xl border border-brand-border bg-brand-surface p-6 shadow-card">
             <h2 className="text-2xl font-bold text-brand-textPrimary mb-6">Review Your Answers</h2>
             
             <div className="grid grid-cols-5 sm:grid-cols-8 md:grid-cols-10 gap-2 mb-6">
@@ -146,7 +146,7 @@ export default function TestTakingInterface({ test, questions, attempt, userId }
                   className={`aspect-square rounded-lg border-2 text-sm font-semibold transition-colors ${
                     isQuestionAnswered(q._id)
                       ? 'border-green-500 bg-green-50 text-green-700'
-                      : 'border-gray-300 bg-white text-gray-500'
+                      : 'border-gray-300 bg-brand-surface text-gray-500'
                   }`}
                 >
                   {idx + 1}
@@ -162,7 +162,7 @@ export default function TestTakingInterface({ test, questions, attempt, userId }
               <div className="flex gap-2">
                 <button
                   onClick={() => setShowReview(false)}
-                  className="rounded-lg border border-brand-border bg-white px-6 py-2.5 text-sm font-semibold text-brand-textPrimary hover:bg-gray-50"
+                  className="rounded-lg border border-brand-border bg-brand-surface px-6 py-2.5 text-sm font-semibold text-brand-textPrimary hover:bg-[#1A1A1A]"
                 >
                   Continue Test
                 </button>
@@ -184,7 +184,7 @@ export default function TestTakingInterface({ test, questions, attempt, userId }
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="sticky top-0 z-10 border-b border-brand-border bg-white shadow-sm">
+      <div className="sticky top-0 z-10 border-b border-brand-border bg-brand-surface shadow-sm">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div>
@@ -206,7 +206,7 @@ export default function TestTakingInterface({ test, questions, attempt, userId }
               
               <button
                 onClick={() => setShowReview(true)}
-                className="rounded-lg border border-brand-border bg-white px-4 py-2 text-sm font-semibold text-brand-textPrimary hover:bg-gray-50"
+                className="rounded-lg border border-brand-border bg-brand-surface px-4 py-2 text-sm font-semibold text-brand-textPrimary hover:bg-[#1A1A1A]"
               >
                 Review
               </button>
@@ -217,7 +217,7 @@ export default function TestTakingInterface({ test, questions, attempt, userId }
 
       {/* Question Content */}
       <div className="container mx-auto px-4 py-6 max-w-4xl">
-        <div className="rounded-xl border border-brand-border bg-white p-8 shadow-card">
+        <div className="rounded-xl border border-brand-border bg-brand-surface p-8 shadow-card">
           {/* Question */}
           <div className="mb-6">
             <div className="flex items-start justify-between gap-4 mb-4">
@@ -288,7 +288,7 @@ export default function TestTakingInterface({ test, questions, attempt, userId }
           <button
             onClick={() => setCurrentIndex(prev => Math.max(0, prev - 1))}
             disabled={currentIndex === 0}
-            className="inline-flex items-center gap-2 rounded-lg border border-brand-border bg-white px-6 py-3 text-sm font-semibold text-brand-textPrimary hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="inline-flex items-center gap-2 rounded-lg border border-brand-border bg-brand-surface px-6 py-3 text-sm font-semibold text-brand-textPrimary hover:bg-[#1A1A1A] disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <ChevronLeft className="h-4 w-4" />
             Previous

@@ -154,25 +154,25 @@ export default function LoginPage() {
 
   return (
     <div className="grid min-h-screen lg:grid-cols-2">
-      <div className="relative hidden overflow-hidden bg-accent-gradient p-12 text-white lg:flex lg:flex-col lg:justify-between">
+      <div className="relative hidden overflow-hidden bg-accent-gradient p-12 lg:flex lg:flex-col lg:justify-between" style={{ color: '#FFFFFF' }}>
         <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-white/10 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-32 -left-20 h-80 w-80 rounded-full bg-black/10 blur-3xl" />
 
-        <div className="relative">
-          <span className="inline-flex items-center gap-2 rounded-xl bg-white px-3 py-2 shadow-sm">
-            <img src="/logo.png" alt="Incube Careers" style={{ width: '160px', height: 'auto' }} />
-          </span>
+        <div className="relative z-10">
+          <div className="inline-flex items-center gap-3 rounded-xl px-5 py-4 shadow-sm" style={{ backgroundColor: '#0A0A0A' }}>
+            <img src="/logo.png" alt="Incube Careers" className="h-16 w-auto" />
+          </div>
         </div>
 
-        <div className="relative">
-          <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-1.5 text-xs font-semibold uppercase tracking-wide backdrop-blur">
-            <Sparkles className="h-4 w-4" />
+        <div className="relative z-10">
+          <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-white backdrop-blur">
+            <Sparkles className="h-4 w-4 text-white" />
             India&apos;s smart learning platform
           </span>
-          <h2 className="mt-6 max-w-md font-heading text-4xl font-bold leading-tight">
+          <h2 className="mt-6 max-w-md font-heading text-4xl font-bold leading-tight text-white">
             Accelerate your career.
           </h2>
-          <p className="mt-4 max-w-md text-base text-white/85">
+          <p className="mt-4 max-w-md text-base text-white" style={{ opacity: 0.95 }}>
             Sign in to continue your learning — live classes with industry experts and
             career opportunities at top tech companies.
           </p>
@@ -264,7 +264,7 @@ export default function LoginPage() {
               <span className="h-px flex-1 bg-brand-border" />
             </div>
 
-            <button type="button" onClick={() => signIn('google', { callbackUrl: getCallbackUrl() })} className="inline-flex w-full items-center justify-center gap-2.5 rounded-xl border border-brand-border bg-white px-4 py-3 text-sm font-semibold text-brand-textPrimary transition hover:bg-brand-surface">
+            <button type="button" onClick={() => signIn('google', { callbackUrl: getCallbackUrl() })} className="inline-flex w-full items-center justify-center gap-2.5 rounded-xl border border-brand-border px-4 py-3 text-sm font-semibold text-white transition hover:opacity-90" style={{ backgroundColor: '#0A0A0A' }}>
               <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true">
                 <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" />
                 <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z" />

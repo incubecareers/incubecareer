@@ -111,10 +111,11 @@ export default function SiteFooter({
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-brand-dark-border pt-6 sm:flex-row">
           <p className="text-center text-sm text-brand-dark-textSecondary sm:text-left">{footerText}</p>
           <div className="flex flex-wrap items-center justify-center gap-4 text-xs font-medium text-brand-dark-textSecondary sm:justify-end">
-            <Link href="/privacy-policy" className="transition hover:text-brand-dark-text">Privacy Policy</Link>
             <Link href="/terms-and-conditions" className="transition hover:text-brand-dark-text">Terms</Link>
-            <Link href="/refund-policy" className="transition hover:text-brand-dark-text">Refund Policy</Link>
-            <Link href="/cookie-policy" className="transition hover:text-brand-dark-text">Cookie Policy</Link>
+            <Link href="/privacy-policy" className="transition hover:text-brand-dark-text">Privacy</Link>
+            <Link href="/refund-policy" className="transition hover:text-brand-dark-text">Refund</Link>
+            <Link href="/shipping-policy" className="transition hover:text-brand-dark-text">Shipping</Link>
+            <Link href="/cookie-policy" className="transition hover:text-brand-dark-text">Cookies</Link>
             <Link href="/about" className="transition hover:text-brand-dark-text">About</Link>
             <Link href="/contact" className="transition hover:text-brand-dark-text">Contact</Link>
           </div>
